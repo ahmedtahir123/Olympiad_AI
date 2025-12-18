@@ -1,5 +1,5 @@
 import { apiClient, ApiResponse } from './api';
-import { School } from '../types';
+import { Entity } from '../types';
 
 export interface UpdateSchoolRequest {
   name?: string;
@@ -15,13 +15,13 @@ export interface SchoolFilters {
 }
 
 class SchoolService {
-  async getAllSchools(filters?: SchoolFilters): Promise<ApiResponse<School[]>> {
+  async getAllSchools(filters?: SchoolFilters): Promise<ApiResponse<Entity[]>> {
     await new Promise(resolve => setTimeout(resolve, 700));
     
-    const mockSchools: School[] = [
+    const mockSchools: Entity[] = [
       {
         id: '1',
-        name: 'Springfield High School',
+        name: 'Springfield High Entity',
         contactEmail: 'admin@springfield.edu',
         contactPhone: '+1 (555) 123-4567',
         address: '123 Main Street, Springfield, IL 62701',
@@ -55,7 +55,7 @@ class SchoolService {
       },
       {
         id: '4',
-        name: 'Central School',
+        name: 'Central Entity',
         contactEmail: 'admin@central.edu',
         contactPhone: '+1 (555) 456-7890',
         address: '321 Central Blvd, Central City, NY 10001',
@@ -66,7 +66,7 @@ class SchoolService {
       },
       {
         id: '5',
-        name: 'Mountain View School',
+        name: 'Mountain View Entity',
         contactEmail: 'contact@mountainview.edu',
         contactPhone: '+1 (555) 567-8901',
         address: '654 Mountain Road, Mountain View, CO 80424',
@@ -81,12 +81,12 @@ class SchoolService {
     let filteredSchools = mockSchools;
     if (filters) {
       if (filters.status) {
-        filteredSchools = filteredSchools.filter(school => school.status === filters.status);
+        filteredSchools = filteredSchools.filter(entity => entity.status === filters.status);
       }
       if (filters.search) {
-        filteredSchools = filteredSchools.filter(school =>
-          school.name.toLowerCase().includes(filters.search!.toLowerCase()) ||
-          school.contactEmail.toLowerCase().includes(filters.search!.toLowerCase())
+        filteredSchools = filteredSchools.filter(entity =>
+          entity.name.toLowerCase().includes(filters.search!.toLowerCase()) ||
+          entity.contactEmail.toLowerCase().includes(filters.search!.toLowerCase())
         );
       }
     }
@@ -94,35 +94,35 @@ class SchoolService {
     return {
       data: filteredSchools,
       success: true,
-      message: 'Schools retrieved successfully'
+      message: 'Entities retrieved successfully'
     };
   }
 
-  async getSchoolById(id: string): Promise<ApiResponse<School>> {
+  async getSchoolById(id: string): Promise<ApiResponse<Entity>> {
     await new Promise(resolve => setTimeout(resolve, 500));
     
-    const schools = await this.getAllSchools();
-    const school = schools.data.find(s => s.id === id);
+    const entities = await this.getAllSchools();
+    const entity = entities.data.find(s => s.id === id);
     
-    if (!school) {
+    if (!entity) {
       throw {
-        message: 'School not found',
+        message: 'Entity not found',
         status: 404
       };
     }
     
     return {
-      data: school,
+      data: entity,
       success: true,
-      message: 'School retrieved successfully'
+      message: 'Entity retrieved successfully'
     };
   }
 
-  async updateSchool(id: string, schoolData: UpdateSchoolRequest): Promise<ApiResponse<School>> {
+  async updateSchool(id: string, schoolData: UpdateSchoolRequest): Promise<ApiResponse<Entity>> {
     await new Promise(resolve => setTimeout(resolve, 800));
     
     const existingSchool = await this.getSchoolById(id);
-    const updatedSchool: School = {
+    const updatedSchool: Entity = {
       ...existingSchool.data,
       ...schoolData
     };
@@ -130,15 +130,15 @@ class SchoolService {
     return {
       data: updatedSchool,
       success: true,
-      message: 'School updated successfully'
+      message: 'Entity updated successfully'
     };
   }
 
-  async updateSchoolStatus(id: string, status: 'approved' | 'rejected'): Promise<ApiResponse<School>> {
+  async updateSchoolStatus(id: string, status: 'approved' | 'rejected'): Promise<ApiResponse<Entity>> {
     await new Promise(resolve => setTimeout(resolve, 600));
     
     const existingSchool = await this.getSchoolById(id);
-    const updatedSchool: School = {
+    const updatedSchool: Entity = {
       ...existingSchool.data,
       status
     };
@@ -146,19 +146,19 @@ class SchoolService {
     return {
       data: updatedSchool,
       success: true,
-      message: `School ${status} successfully`
+      message: `Entity ${status} successfully`
     };
   }
 
   async deleteSchool(id: string): Promise<ApiResponse<{ message: string }>> {
-    return apiClient.delete<{ message: string }>(`/schools/${id}`);
+    return apiClient.delete<{ message: string }>(`/entities/${id}`);
   }
 
   async uploadSchoolLogo(id: string, logoFile: File): Promise<ApiResponse<{ logoUrl: string }>> {
     const formData = new FormData();
     formData.append('logo', logoFile);
     
-    return apiClient.upload<{ logoUrl: string }>(`/schools/${id}/logo`, formData);
+    return apiClient.upload<{ logoUrl: string }>(`/entities/${id}/logo`, formData);
   }
 
   async getSchoolStats(): Promise<ApiResponse<{
@@ -172,15 +172,15 @@ class SchoolService {
       pendingSchools: number;
       approvedSchools: number;
       rejectedSchools: number;
-    }>('/schools/stats');
+    }>('/entities/stats');
   }
 
   async getSchoolEvents(schoolId: string): Promise<ApiResponse<any[]>> {
-    return apiClient.get<any[]>(`/schools/${schoolId}/events`);
+    return apiClient.get<any[]>(`/entities/${schoolId}/events`);
   }
 
   async getSchoolParticipants(schoolId: string): Promise<ApiResponse<any[]>> {
-    return apiClient.get<any[]>(`/schools/${schoolId}/participants`);
+    return apiClient.get<any[]>(`/entities/${schoolId}/participants`);
   }
 }
 

@@ -64,7 +64,7 @@ export const ScheduleManagement: React.FC = () => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Schedule Event</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Schedule Compition</h2>
           <button
             onClick={() => {
               setShowCreateModal(false);
@@ -79,7 +79,7 @@ export const ScheduleManagement: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Event Name *
+              Compition Name *
             </label>
             <select 
               required
@@ -189,7 +189,7 @@ export const ScheduleManagement: React.FC = () => {
               disabled={createScheduleMutation.loading}
               className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50"
             >
-              {createScheduleMutation.loading ? 'Scheduling...' : 'Schedule Event'}
+              {createScheduleMutation.loading ? 'Scheduling...' : 'Schedule Compition'}
             </button>
           </div>
         </form>
@@ -291,7 +291,7 @@ export const ScheduleManagement: React.FC = () => {
               className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
             >
               <Plus className="w-5 h-5" />
-              Schedule Event
+              Schedule Compition
             </button>
           </div>
         </div>
@@ -320,7 +320,7 @@ export const ScheduleManagement: React.FC = () => {
                         <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
                           <div className="flex items-center">
                             <Clock className="w-4 h-4 mr-1" />
-                            All Day Event
+                            All Day Compition
                           </div>
                           <div className="flex items-center">
                             <MapPin className="w-4 h-4 mr-1" />
@@ -357,24 +357,24 @@ export const ScheduleManagement: React.FC = () => {
             ) : (
               <div className="text-center py-12">
                 <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Events Scheduled</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Compitions Scheduled</h3>
                 <p className="text-gray-500 mb-4">No events are scheduled for this date</p>
                 <button
                   onClick={() => setShowCreateModal(true)}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
                 >
-                  Schedule an Event
+                  Schedule an Compition
                 </button>
               </div>
             )}
           </div>
         </div>
 
-        {/* Upcoming Events & Venue Status */}
+        {/* Upcoming Compitions & Venue Status */}
         <div className="space-y-6">
-          {/* Upcoming Events */}
+          {/* Upcoming Compitions */}
           <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Events</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Compitions</h2>
             <div className="space-y-4">
               {upcomingEvents.slice(0, 5).map((event) => (
                 <div key={event.id} className="p-3 bg-gray-50 rounded-lg">

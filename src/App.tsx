@@ -37,7 +37,7 @@ const AuthenticatedApp: React.FC = () => {
           {user?.role === 'super_admin' ? (
             <>
               <Route path="/dashboard" element={<SuperAdminDashboard />} />
-              <Route path="/schools" element={<SchoolManagement />} />
+              <Route path="/entities" element={<SchoolManagement />} />
               <Route path="/events" element={<EventManagement />} />
               <Route path="/draws" element={<DrawManagement />} />
               <Route path="/participants" element={<ParticipantOverview />} />
@@ -78,8 +78,8 @@ const AuthScreen: React.FC = () => {
           <div className="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
             <Trophy className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2">Olympics System</h1>
-          <p className="text-blue-100">For Schools Management Platform</p>
+          <h1 className="text-4xl font-bold text-white mb-2">Saudi Arabia Olympics System</h1>
+          <p className="text-blue-100">For Entity Management Platform</p>
         </div>
         
         {showLogin ? (
@@ -108,7 +108,7 @@ const AppContent: React.FC = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading Olympics System...</p>
+          <p className="text-white text-lg">Loading Saudi Arabia Olympics System...</p>
         </div>
       </div>
     );

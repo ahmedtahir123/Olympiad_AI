@@ -32,7 +32,7 @@ class PaymentService {
       {
         id: '1',
         schoolId: '1',
-        schoolName: 'Springfield High School',
+        schoolName: 'Springfield High Entity',
         amount: 350,
         method: 'card',
         status: 'completed',
@@ -54,7 +54,7 @@ class PaymentService {
       {
         id: '3',
         schoolId: '4',
-        schoolName: 'Central School',
+        schoolName: 'Central Entity',
         amount: 200,
         method: 'card',
         status: 'pending',
@@ -65,7 +65,7 @@ class PaymentService {
       {
         id: '4',
         schoolId: '1',
-        schoolName: 'Springfield High School',
+        schoolName: 'Springfield High Entity',
         amount: 150,
         method: 'cash',
         status: 'failed',
@@ -127,8 +127,8 @@ class PaymentService {
     
     const newPayment: Payment = {
       id: 'payment-' + Date.now(),
-      schoolId: 'current-school-id',
-      schoolName: 'Current School',
+      schoolId: 'current-entity-id',
+      schoolName: 'Current Entity',
       amount: paymentData.amount,
       method: paymentData.method,
       status: 'completed',
@@ -161,7 +161,7 @@ class PaymentService {
   }
 
   async getSchoolPayments(schoolId: string): Promise<ApiResponse<Payment[]>> {
-    return apiClient.get<Payment[]>(`/payments/school/${schoolId}`);
+    return apiClient.get<Payment[]>(`/payments/entity/${schoolId}`);
   }
 
   async downloadInvoice(paymentId: string): Promise<Blob> {

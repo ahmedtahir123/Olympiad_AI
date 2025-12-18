@@ -74,7 +74,7 @@ export const ResultManagement: React.FC = () => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Create Event Results</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Create Compition Results</h2>
           <button
             onClick={() => setShowCreateModal(false)}
             className="text-gray-500 hover:text-gray-700"
@@ -87,7 +87,7 @@ export const ResultManagement: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Event *
+                Select Compition *
               </label>
               <select 
                 value={selectedEvent}
@@ -160,11 +160,11 @@ export const ResultManagement: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      School
+                      Entity
                     </label>
                     <input
                       type="text"
-                      placeholder="School name"
+                      placeholder="Entity name"
                       className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -308,7 +308,7 @@ export const ResultManagement: React.FC = () => {
         </div>
       </div>
 
-      {/* Events with Results */}
+      {/* Compitions with Results */}
       <div className="grid grid-cols-1 gap-8">
         {Object.entries(groupedResults).map(([eventId, eventData]) => (
           <div key={eventId} className="bg-white rounded-xl shadow-lg p-6">
@@ -339,7 +339,7 @@ export const ResultManagement: React.FC = () => {
                   <tr>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Position</th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Participant</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">School</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Entity</th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Score</th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Certificate</th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Actions</th>
@@ -361,7 +361,7 @@ export const ResultManagement: React.FC = () => {
                       <td className="py-4 px-4">
                         <p className="font-medium text-gray-900">Participant {index + 1}</p>
                       </td>
-                      <td className="py-4 px-4 text-gray-900">School {index + 1}</td>
+                      <td className="py-4 px-4 text-gray-900">Entity {index + 1}</td>
                       <td className="py-4 px-4">
                         <span className="font-semibold text-gray-900">
                           {result.score ? `${result.score}/100` : result.time || 'N/A'}
@@ -429,9 +429,9 @@ export const ResultManagement: React.FC = () => {
         ))}
       </div>
 
-      {/* Events Pending Results */}
+      {/* Compitions Pending Results */}
       <div className="mt-8">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Events Pending Results</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Compitions Pending Results</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events?.filter(e => e.status === 'completed' && !groupedResults[e.id]).map((event) => (
             <div key={event.id} className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500">
@@ -443,7 +443,7 @@ export const ResultManagement: React.FC = () => {
               </div>
               
               <h3 className="text-lg font-bold text-gray-900 mb-2">{event.name}</h3>
-              <p className="text-gray-600 mb-4">Event Date: {new Date(event.date).toLocaleDateString()}</p>
+              <p className="text-gray-600 mb-4">Compition Date: {new Date(event.date).toLocaleDateString()}</p>
               
               <button
                 onClick={() => setShowCreateModal(true)}

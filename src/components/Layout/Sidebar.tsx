@@ -23,7 +23,7 @@ export const Sidebar: React.FC = () => {
 
   const schoolAdminItems = [
     { id: '/dashboard', label: 'Dashboard', icon: Home },
-    { id: '/events', label: 'Events', icon: Calendar },
+    { id: '/events', label: 'Compitions', icon: Calendar },
     { id: '/draws', label: 'Competition Draws', icon: Trophy },
     { id: '/participants', label: 'Participants', icon: Users },
     { id: '/payments', label: 'Payments', icon: CreditCard },
@@ -33,8 +33,8 @@ export const Sidebar: React.FC = () => {
 
   const superAdminItems = [
     { id: '/dashboard', label: 'Dashboard', icon: Home },
-    { id: '/schools', label: 'Schools', icon: School },
-    { id: '/events', label: 'Events', icon: Calendar },
+    { id: '/entities', label: 'Entities', icon: School },
+    { id: '/events', label: 'Compitions', icon: Calendar },
     { id: '/draws', label: 'Competition Draws', icon: Trophy },
     { id: '/participants', label: 'All Participants', icon: UserCheck },
     { id: '/payments', label: 'Payments', icon: DollarSign },
@@ -53,8 +53,8 @@ export const Sidebar: React.FC = () => {
             <Trophy className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-gray-900">Olympics</h1>
-            <p className="text-sm text-gray-500">{user?.role === 'super_admin' ? 'Admin Panel' : 'School Panel'}</p>
+            <h1 className="font-bold text-gray-900">Saudi Arabia Olympics</h1>
+            <p className="text-sm text-gray-500">{user?.role === 'super_admin' ? 'Admin Panel' : 'Entity Panel'}</p>
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ class ParticipantService {
         grade: '11th',
         category: 'academic',
         schoolId: '1',
-        schoolName: 'Springfield High School',
+        schoolName: 'Springfield High Entity',
         photo: 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
         documents: ['birth_certificate.pdf', 'medical_form.pdf'],
         eventsRegistered: ['1', '3'],
@@ -56,7 +56,7 @@ class ParticipantService {
         grade: '12th',
         category: 'sporting',
         schoolId: '1',
-        schoolName: 'Springfield High School',
+        schoolName: 'Springfield High Entity',
         photo: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
         documents: ['birth_certificate.pdf', 'sports_physical.pdf'],
         eventsRegistered: ['2', '5'],
@@ -90,7 +90,7 @@ class ParticipantService {
         grade: '12th',
         category: 'academic',
         schoolId: '4',
-        schoolName: 'Central School',
+        schoolName: 'Central Entity',
         documents: ['birth_certificate.pdf', 'transcript.pdf'],
         eventsRegistered: ['4'],
         results: [
@@ -158,8 +158,8 @@ class ParticipantService {
       age: participantData.age,
       grade: participantData.grade,
       category: participantData.category,
-      schoolId: 'current-school-id', // Would come from auth context
-      schoolName: 'Current School', // Would come from auth context
+      schoolId: 'current-entity-id', // Would come from auth context
+      schoolName: 'Current Entity', // Would come from auth context
       photo: participantData.photo ? 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop' : undefined,
       documents: participantData.documents?.map(doc => doc.name) || [],
       eventsRegistered: [],

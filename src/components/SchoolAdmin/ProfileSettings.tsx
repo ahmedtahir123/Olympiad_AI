@@ -17,7 +17,7 @@ export const ProfileSettings: React.FC = () => {
     establishedYear: '1985',
     totalStudents: '1200',
     principalName: 'Dr. Sarah Johnson',
-    description: 'Springfield High School is a premier educational institution committed to academic excellence and character development.'
+    description: 'Springfield High Entity is a premier educational institution committed to academic excellence and character development.'
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -101,7 +101,7 @@ export const ProfileSettings: React.FC = () => {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
-        <p className="text-gray-600 mt-2">Manage your school's profile information</p>
+        <p className="text-gray-600 mt-2">Manage your entity's profile information</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -152,7 +152,7 @@ export const ProfileSettings: React.FC = () => {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900">School Information</h2>
+              <h2 className="text-xl font-bold text-gray-900">Entity Information</h2>
               <div className="flex gap-3">
                 {isEditing ? (
                   <>
@@ -185,7 +185,7 @@ export const ProfileSettings: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  School Name
+                  Entity Name
                 </label>
                 <input
                   type="text"
@@ -314,7 +314,7 @@ export const ProfileSettings: React.FC = () => {
 
             <div className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                School Address
+                Entity Address
               </label>
               <textarea
                 name="address"
@@ -330,7 +330,7 @@ export const ProfileSettings: React.FC = () => {
 
             <div className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                School Description
+                Entity Description
               </label>
               <textarea
                 name="description"
@@ -352,7 +352,7 @@ export const ProfileSettings: React.FC = () => {
               <div className="text-center p-4 bg-blue-50 rounded-lg">
                 <School className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                 <p className="text-2xl font-bold text-gray-900">8</p>
-                <p className="text-sm text-gray-600">Events Joined</p>
+                <p className="text-sm text-gray-600">Compitions Joined</p>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
                 <User className="w-8 h-8 text-green-600 mx-auto mb-2" />

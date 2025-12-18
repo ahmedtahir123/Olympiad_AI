@@ -8,7 +8,7 @@ export interface User {
   avatar?: string;
 }
 
-export interface School {
+export interface Entity {
   id: string;
   name: string;
   contactEmail: string;

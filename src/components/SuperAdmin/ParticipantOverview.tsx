@@ -22,7 +22,7 @@ export const ParticipantOverview: React.FC = () => {
       { immediate: true }
     );
 
-  const { data: schools } = useApi(
+  const { data: entities } = useApi(
     fetchSchools,
     { immediate: true }
   );
@@ -93,7 +93,7 @@ export const ParticipantOverview: React.FC = () => {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">All Participants</h1>
-        <p className="text-gray-600 mt-2">Overview of all registered participants across schools</p>
+        <p className="text-gray-600 mt-2">Overview of all registered participants across entities</p>
       </div>
 
       {/* Stats Cards */}
@@ -147,7 +147,7 @@ export const ParticipantOverview: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Search participants or schools..."
+                placeholder="Search participants or entities..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -161,9 +161,9 @@ export const ParticipantOverview: React.FC = () => {
                 onChange={(e) => setFilterSchool(e.target.value)}
                 className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="all">All Schools</option>
-                {schools?.map(school => (
-                  <option key={school.id} value={school.id}>{school.name}</option>
+                <option value="all">All Entities</option>
+                {entities?.map(entity => (
+                  <option key={entity.id} value={entity.id}>{entity.name}</option>
                 ))}
               </select>
               
@@ -196,10 +196,10 @@ export const ParticipantOverview: React.FC = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Participant</th>
-                <th className="text-left py-4 px-6 font-semibold text-gray-700">School</th>
+                <th className="text-left py-4 px-6 font-semibold text-gray-700">Entity</th>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Grade</th>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Category</th>
-                <th className="text-left py-4 px-6 font-semibold text-gray-700">Events</th>
+                <th className="text-left py-4 px-6 font-semibold text-gray-700">Compitions</th>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Results</th>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Actions</th>
               </tr>
@@ -245,7 +245,7 @@ export const ParticipantOverview: React.FC = () => {
                     <div className="flex flex-wrap gap-1">
                       {participant.eventsRegistered.slice(0, 2).map((eventId, index) => (
                         <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
-                          Event {index + 1}
+                          Compition {index + 1}
                         </span>
                       ))}
                       {participant.eventsRegistered.length > 2 && (
@@ -320,11 +320,11 @@ export const ParticipantOverview: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Event Registrations</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Compition Registrations</h3>
                 <div className="space-y-3">
                   {selectedParticipant.eventsRegistered.map((eventId, index) => (
                     <div key={index} className="p-4 bg-gray-50 rounded-lg">
-                      <p className="font-medium text-gray-900">Event {index + 1}</p>
+                      <p className="font-medium text-gray-900">Compition {index + 1}</p>
                       <p className="text-sm text-gray-600">Status: Registered</p>
                     </div>
                   ))}

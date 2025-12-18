@@ -40,7 +40,7 @@ export const CertificateView: React.FC = () => {
           position: 1,
           score: 95,
           date: '2025-01-15',
-          schoolName: user?.schoolName || 'Springfield High School',
+          schoolName: user?.schoolName || 'Springfield High Entity',
           certificateId: `CERT-${resultId}-2025`
         };
         
@@ -164,7 +164,7 @@ export const CertificateView: React.FC = () => {
                 <Trophy className="w-16 h-16 text-yellow-600" />
                 <div>
                   <h1 className="text-4xl font-bold text-gray-900 mb-2">CERTIFICATE OF ACHIEVEMENT</h1>
-                  <p className="text-lg text-gray-600">Olympics System for Schools</p>
+                  <p className="text-lg text-gray-600">Saudi Arabia Olympics System for Entity</p>
                 </div>
                 <Medal className="w-16 h-16 text-blue-600" />
               </div>
@@ -226,7 +226,7 @@ export const CertificateView: React.FC = () => {
               <div className="flex justify-between items-end">
                 <div className="text-center">
                   <div className="w-48 border-b-2 border-gray-400 mb-2"></div>
-                  <p className="text-sm text-gray-600 font-medium">Event Coordinator</p>
+                  <p className="text-sm text-gray-600 font-medium">Compition Coordinator</p>
                 </div>
                 
                 <div className="text-center">
@@ -236,7 +236,7 @@ export const CertificateView: React.FC = () => {
                 
                 <div className="text-center">
                   <div className="w-48 border-b-2 border-gray-400 mb-2"></div>
-                  <p className="text-sm text-gray-600 font-medium">School Principal</p>
+                  <p className="text-sm text-gray-600 font-medium">Entity Principal</p>
                 </div>
               </div>
             </div>
@@ -258,11 +258,11 @@ export const CertificateView: React.FC = () => {
               <span className="ml-2 text-gray-900">{certificateData.participantName}</span>
             </div>
             <div>
-              <span className="font-medium text-gray-700">School:</span>
+              <span className="font-medium text-gray-700">Entity:</span>
               <span className="ml-2 text-gray-900">{certificateData.schoolName}</span>
             </div>
             <div>
-              <span className="font-medium text-gray-700">Event:</span>
+              <span className="font-medium text-gray-700">Compition:</span>
               <span className="ml-2 text-gray-900">{certificateData.eventName}</span>
             </div>
             <div>

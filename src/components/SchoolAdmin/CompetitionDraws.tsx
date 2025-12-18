@@ -204,9 +204,9 @@ export const CompetitionDraws: React.FC = () => {
               onChange={(e) => setSelectedEvent(e.target.value)}
               className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="all">All Events</option>
-              <option value="academic">Academic Events</option>
-              <option value="sporting">Sporting Events</option>
+              <option value="all">All Compitions</option>
+              <option value="academic">Academic Compitions</option>
+              <option value="sporting">Sporting Compitions</option>
             </select>
           </div>
         </div>

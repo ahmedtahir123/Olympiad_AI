@@ -2,7 +2,7 @@ import React, { useState,  useCallback } from 'react';
 import { School, Users, MapPin, Phone, Mail, CheckCircle, XCircle, Clock, Search, Filter, Eye, Edit } from 'lucide-react';
 import { schoolService } from '../../services/schoolService';
 import { useApi } from '../../hooks/useApi';
-import { School as SchoolType } from '../../types';
+import { Entity as SchoolType } from '../../types';
 
 export const SchoolManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,15 +12,15 @@ export const SchoolManagement: React.FC = () => {
 
   const fetchSchools = useCallback(() => schoolService.getAllSchools(), []);
 
-  const { data: schools, loading, error, refetch } = useApi(fetchSchools, {
+  const { data: entities, loading, error, refetch } = useApi(fetchSchools, {
   immediate: true,
 });
 
-  const filteredSchools = schools?.filter(school => {
-    const matchesSearch = school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         school.contactEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         school.city.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || school.status === statusFilter;
+  const filteredSchools = entities?.filter(entity => {
+    const matchesSearch = entity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         entity.contactEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         entity.city.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || entity.status === statusFilter;
     return matchesSearch && matchesStatus;
   }) || [];
 
@@ -29,17 +29,17 @@ export const SchoolManagement: React.FC = () => {
       await schoolService.approveSchool(schoolId);
       refetch();
     } catch (error) {
-      console.error('Error approving school:', error);
+      console.error('Error approving entity:', error);
     }
   };
 
   const handleReject = async (schoolId: string) => {
-    if (window.confirm('Are you sure you want to reject this school application?')) {
+    if (window.confirm('Are you sure you want to reject this entity application?')) {
       try {
         await schoolService.rejectSchool(schoolId);
         refetch();
       } catch (error) {
-        console.error('Error rejecting school:', error);
+        console.error('Error rejecting entity:', error);
       }
     }
   };
@@ -86,7 +86,7 @@ export const SchoolManagement: React.FC = () => {
               <School className="w-5 h-5" />
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">Error loading schools</h3>
+              <h3 className="text-sm font-medium text-red-800">Error loading entities</h3>
               <p className="text-sm text-red-700 mt-1">{error}</p>
             </div>
           </div>
@@ -105,25 +105,25 @@ export const SchoolManagement: React.FC = () => {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">School Management</h1>
-          <p className="text-gray-600 mt-1">Manage school registrations and approvals</p>
+          <h1 className="text-2xl font-bold text-gray-900">Entity Management</h1>
+          <p className="text-gray-600 mt-1">Manage entity registrations and approvals</p>
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-center">
             <p className="text-2xl font-bold text-green-600">
-              {schools?.filter(s => s.status === 'approved').length || 0}
+              {entities?.filter(s => s.status === 'approved').length || 0}
             </p>
             <p className="text-sm text-gray-500">Approved</p>
           </div>
           <div className="text-center">
             <p className="text-2xl font-bold text-yellow-600">
-              {schools?.filter(s => s.status === 'pending').length || 0}
+              {entities?.filter(s => s.status === 'pending').length || 0}
             </p>
             <p className="text-sm text-gray-500">Pending</p>
           </div>
           <div className="text-center">
             <p className="text-2xl font-bold text-blue-600">
-              {schools?.length || 0}
+              {entities?.length || 0}
             </p>
             <p className="text-sm text-gray-500">Total</p>
           </div>
@@ -138,7 +138,7 @@ export const SchoolManagement: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder="Search schools..."
+                placeholder="Search entities..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -161,14 +161,14 @@ export const SchoolManagement: React.FC = () => {
         </div>
       </div>
 
-      {/* Schools List */}
+      {/* Entity List */}
       <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  School
+                  Entity
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Contact
@@ -188,16 +188,16 @@ export const SchoolManagement: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredSchools.map((school) => (
-                <tr key={school.id} className="hover:bg-gray-50">
+              {filteredSchools.map((entity) => (
+                <tr key={entity.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
-                        {school.logo ? (
+                        {entity.logo ? (
                           <img
                             className="h-10 w-10 rounded-full object-cover"
-                            src={school.logo}
-                            alt={school.name}
+                            src={entity.logo}
+                            alt={entity.name}
                           />
                         ) : (
                           <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
@@ -206,43 +206,43 @@ export const SchoolManagement: React.FC = () => {
                         )}
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{school.name}</div>
-                        <div className="text-sm text-gray-500">{school.type}</div>
+                        <div className="text-sm font-medium text-gray-900">{entity.name}</div>
+                        <div className="text-sm text-gray-500">{entity.type}</div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{school.contactPerson}</div>
+                    <div className="text-sm text-gray-900">{entity.contactPerson}</div>
                     <div className="text-sm text-gray-500 flex items-center">
                       <Mail className="w-3 h-3 mr-1" />
-                      {school.contactEmail}
+                      {entity.contactEmail}
                     </div>
                     <div className="text-sm text-gray-500 flex items-center">
                       <Phone className="w-3 h-3 mr-1" />
-                      {school.contactPhone}
+                      {entity.contactPhone}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 flex items-center">
                       <MapPin className="w-3 h-3 mr-1" />
-                      {school.city}, {school.state}
+                      {entity.city}, {entity.state}
                     </div>
-                    <div className="text-sm text-gray-500">{school.address}</div>
+                    <div className="text-sm text-gray-500">{entity.address}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 flex items-center">
                       <Users className="w-3 h-3 mr-1" />
-                      {school.totalStudents || 0}
+                      {entity.totalStudents || 0}
                     </div>
                     <div className="text-sm text-gray-500">
-                      {school.participantsCount || 0} participating
+                      {entity.participantsCount || 0} participating
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
-                      {getStatusIcon(school.status)}
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(school.status)}`}>
-                        {school.status}
+                      {getStatusIcon(entity.status)}
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(entity.status)}`}>
+                        {entity.status}
                       </span>
                     </div>
                   </td>
@@ -250,7 +250,7 @@ export const SchoolManagement: React.FC = () => {
                     <div className="flex items-center justify-end space-x-2">
                       <button
                         onClick={() => {
-                          setSelectedSchool(school);
+                          setSelectedSchool(entity);
                           setShowDetails(true);
                         }}
                         className="text-blue-600 hover:text-blue-900 p-1"
@@ -258,17 +258,17 @@ export const SchoolManagement: React.FC = () => {
                       >
                         <Eye className="w-4 h-4" />
                       </button>
-                      {school.status === 'pending' && (
+                      {entity.status === 'pending' && (
                         <>
                           <button
-                            onClick={() => handleApprove(school.id)}
+                            onClick={() => handleApprove(entity.id)}
                             className="text-green-600 hover:text-green-900 p-1"
                             title="Approve"
                           >
                             <CheckCircle className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => handleReject(school.id)}
+                            onClick={() => handleReject(entity.id)}
                             className="text-red-600 hover:text-red-900 p-1"
                             title="Reject"
                           >
@@ -288,22 +288,22 @@ export const SchoolManagement: React.FC = () => {
       {filteredSchools.length === 0 && !loading && (
         <div className="text-center py-12">
           <School className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No schools found</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No entities found</h3>
           <p className="text-gray-600">
             {searchTerm || statusFilter !== 'all'
               ? 'Try adjusting your search or filters'
-              : 'No schools have registered yet'
+              : 'No entities have registered yet'
             }
           </p>
         </div>
       )}
 
-      {/* School Details Modal */}
+      {/* Entity Details Modal */}
       {showDetails && selectedSchool && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900">School Details</h2>
+              <h2 className="text-xl font-bold text-gray-900">Entity Details</h2>
               <button
                 onClick={() => setShowDetails(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -381,7 +381,7 @@ export const SchoolManagement: React.FC = () => {
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <p className="text-2xl font-bold text-purple-600">{selectedSchool.eventsCount || 0}</p>
-                    <p className="text-sm text-gray-500">Events</p>
+                    <p className="text-sm text-gray-500">Compitions</p>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <p className="text-2xl font-bold text-yellow-600">${selectedSchool.totalPayments || 0}</p>
@@ -408,7 +408,7 @@ export const SchoolManagement: React.FC = () => {
                     }}
                     className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                   >
-                    Approve School
+                    Approve Entity
                   </button>
                 </div>
               )}

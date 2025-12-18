@@ -46,7 +46,7 @@ class DrawService {
             position: 1,
             participant1: 'Springfield High A',
             participant2: 'Riverside Academy A',
-            school1: 'Springfield High School',
+            school1: 'Springfield High Entity',
             school2: 'Riverside Academy',
             winner: 'Springfield High A',
             score: '78-65',
@@ -58,9 +58,9 @@ class DrawService {
             id: 'match-2',
             round: 1,
             position: 2,
-            participant1: 'Central School A',
+            participant1: 'Central Entity A',
             participant2: 'Oakwood High A',
-            school1: 'Central School',
+            school1: 'Central Entity',
             school2: 'Oakwood High',
             status: 'pending',
             scheduledTime: '2025-03-20T11:30:00Z',
@@ -94,8 +94,8 @@ class DrawService {
             position: 1,
             participant1: 'John Doe',
             participant2: 'Jane Smith',
-            school1: 'Springfield High School',
-            school2: 'Springfield High School',
+            school1: 'Springfield High Entity',
+            school2: 'Springfield High Entity',
             winner: 'John Doe',
             score: '95-87',
             status: 'completed',
@@ -156,7 +156,7 @@ class DrawService {
     const newDraw: CompetitionDraw = {
       id: 'draw-' + Date.now(),
       eventId: drawData.eventId,
-      eventName: 'Event Name', // Would be fetched from event service
+      eventName: 'Compition Name', // Would be fetched from event service
       drawType: drawData.drawType,
       totalParticipants: drawData.participants.length,
       totalRounds: Math.ceil(Math.log2(drawData.participants.length)),
@@ -217,7 +217,7 @@ class DrawService {
   }
 
   async getSchoolDraws(schoolId: string): Promise<ApiResponse<CompetitionDraw[]>> {
-    return apiClient.get<CompetitionDraw[]>(`/draws/school/${schoolId}`);
+    return apiClient.get<CompetitionDraw[]>(`/draws/entity/${schoolId}`);
   }
 
   async getEventDraw(eventId: string): Promise<ApiResponse<CompetitionDraw | null>> {

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Bell, Send, Users, School, Calendar, Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { Bell, Send, Users, School as Entity, Calendar, Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { notificationService } from '../../services/notificationService';
 import { schoolService } from '../../services/schoolService';
 import { useApi, useMutation } from '../../hooks/useApi';
@@ -17,7 +17,7 @@ export const NotificationCenter: React.FC = () => {
     { immediate: true }
   );
 
-    const { data: schools } = useApi(fetchSchools, {
+    const { data: entities } = useApi(fetchSchools, {
     immediate: true,
   });
 
@@ -143,39 +143,39 @@ export const NotificationCenter: React.FC = () => {
                 Target Audience *
               </label>
               <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option value="all">All Schools</option>
-                <option value="specific">Specific Schools</option>
-                <option value="event">Event Participants</option>
+                <option value="all">All Entity</option>
+                <option value="specific">Specific Entity</option>
+                <option value="event">Compition Participants</option>
               </select>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Select Schools (Optional)
+              Select Entity (Optional)
             </label>
             <div className="space-y-2 max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-3">
-              {schools?.map(school => (
-                <label key={school.id} className="flex items-center">
+              {entities?.map(entity => (
+                <label key={entity.id} className="flex items-center">
                   <input 
                     type="checkbox" 
-                    checked={formData.targetSchools.includes(school.id)}
+                    checked={formData.targetSchools.includes(entity.id)}
                     onChange={(e) => {
                       if (e.target.checked) {
                         setFormData({
                           ...formData,
-                          targetSchools: [...formData.targetSchools, school.id]
+                          targetSchools: [...formData.targetSchools, entity.id]
                         });
                       } else {
                         setFormData({
                           ...formData,
-                          targetSchools: formData.targetSchools.filter(id => id !== school.id)
+                          targetSchools: formData.targetSchools.filter(id => id !== entity.id)
                         });
                       }
                     }}
                     className="mr-2" 
                   />
-                  <span className="text-sm text-gray-700">{school.name}</span>
+                  <span className="text-sm text-gray-700">{entity.name}</span>
                 </label>
               ))}
             </div>
@@ -302,7 +302,7 @@ export const NotificationCenter: React.FC = () => {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Notification Center</h1>
-        <p className="text-gray-600 mt-2">Send announcements and notifications to schools</p>
+        <p className="text-gray-600 mt-2">Send announcements and notifications to entities</p>
       </div>
 
       {/* Header Actions */}
@@ -331,9 +331,9 @@ export const NotificationCenter: React.FC = () => {
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <Users className="w-8 h-8 text-blue-200" />
-            <span className="text-2xl font-bold">{schools?.length || 0}</span>
+            <span className="text-2xl font-bold">{entities?.length || 0}</span>
           </div>
-          <h3 className="font-semibold mb-2">All Schools</h3>
+          <h3 className="font-semibold mb-2">All Entity</h3>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg px-4 py-2 text-sm transition-all">
             Send to All
           </button>
@@ -344,18 +344,18 @@ export const NotificationCenter: React.FC = () => {
             <Calendar className="w-8 h-8 text-green-200" />
             <span className="text-2xl font-bold">24</span>
           </div>
-          <h3 className="font-semibold mb-2">Active Events</h3>
+          <h3 className="font-semibold mb-2">Active Compitions</h3>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg px-4 py-2 text-sm transition-all">
-            Event Updates
+            Compition Updates
           </button>
         </div>
         
         <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-6 text-white">
           <div className="flex items-center justify-between mb-4">
-            <School className="w-8 h-8 text-purple-200" />
-            <span className="text-2xl font-bold">{schools?.filter(s => s.status === 'pending').length || 0}</span>
+            <Entity className="w-8 h-8 text-purple-200" />
+            <span className="text-2xl font-bold">{entities?.filter(s => s.status === 'pending').length || 0}</span>
           </div>
-          <h3 className="font-semibold mb-2">Pending Schools</h3>
+          <h3 className="font-semibold mb-2">Pending Entities</h3>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg px-4 py-2 text-sm transition-all">
             Send Reminders
           </button>
@@ -393,7 +393,7 @@ export const NotificationCenter: React.FC = () => {
                       {announcement.targetSchools && (
                         <>
                           <span>•</span>
-                          <span>Sent to {announcement.targetSchools.length} schools</span>
+                          <span>Sent to {announcement.targetSchools.length} entities</span>
                         </>
                       )}
                     </div>
@@ -423,10 +423,10 @@ export const NotificationCenter: React.FC = () => {
               {announcement.targetSchools && (
                 <div className="flex flex-wrap gap-2 mt-3">
                   {announcement.targetSchools.slice(0, 3).map((schoolId, index) => {
-                    const school = schools?.find(s => s.id === schoolId);
+                    const entity = entities?.find(s => s.id === schoolId);
                     return (
                       <span key={index} className="px-2 py-1 bg-white bg-opacity-50 rounded text-sm">
-                        {school?.name || `School ${index + 1}`}
+                        {entity?.name || `Entity ${index + 1}`}
                       </span>
                     );
                   })}
@@ -485,14 +485,14 @@ export const NotificationCenter: React.FC = () => {
                   {selectedAnnouncement.targetSchools ? (
                     <div className="space-y-1">
                       {selectedAnnouncement.targetSchools.map((schoolId, index) => {
-                        const school = schools?.find(s => s.id === schoolId);
+                        const entity = entities?.find(s => s.id === schoolId);
                         return (
-                          <p key={index} className="text-sm text-gray-700">• {school?.name || `School ${index + 1}`}</p>
+                          <p key={index} className="text-sm text-gray-700">• {entity?.name || `Entity ${index + 1}`}</p>
                         );
                       })}
                     </div>
                   ) : (
-                    <p className="text-sm text-gray-700">All registered schools</p>
+                    <p className="text-sm text-gray-700">All registered entities</p>
                   )}
                 </div>
               </div>

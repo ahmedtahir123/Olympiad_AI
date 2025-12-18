@@ -106,7 +106,7 @@ class ResultService {
     
     const newResult: ParticipantResult = {
       eventId: resultData.eventId,
-      eventName: 'Event Name', // Would be fetched from event service
+      eventName: 'Compition Name', // Would be fetched from event service
       position: resultData.position,
       score: resultData.score,
       time: resultData.time,
@@ -129,7 +129,7 @@ class ResultService {
     
     const results: ParticipantResult[] = bulkData.results.map(result => ({
       eventId: bulkData.eventId,
-      eventName: 'Event Name',
+      eventName: 'Compition Name',
       position: result.position,
       score: result.score,
       time: result.time,
@@ -168,7 +168,7 @@ class ResultService {
   }
 
   async getSchoolResults(schoolId: string): Promise<ApiResponse<ParticipantResult[]>> {
-    return apiClient.get<ParticipantResult[]>(`/results/school/${schoolId}`);
+    return apiClient.get<ParticipantResult[]>(`/results/entity/${schoolId}`);
   }
 
   async generateCertificate(resultId: string): Promise<ApiResponse<{ certificateUrl: string }>> {

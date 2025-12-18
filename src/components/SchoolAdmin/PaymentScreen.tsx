@@ -231,7 +231,7 @@ export const PaymentScreen: React.FC = () => {
                 <div className="bg-blue-50 p-6 rounded-lg">
                   <h3 className="font-semibold text-blue-900 mb-4">Bank Transfer Details</h3>
                   <div className="space-y-2 text-sm text-blue-800">
-                    <p><strong>Bank Name:</strong> Olympics Bank</p>
+                    <p><strong>Bank Name:</strong> Saudi Arabia Olympics Bank</p>
                     <p><strong>Account Number:</strong> 1234567890123456</p>
                     <p><strong>Routing Number:</strong> 987654321</p>
                     <p><strong>Reference:</strong> {`PAY-${Date.now()}`}</p>

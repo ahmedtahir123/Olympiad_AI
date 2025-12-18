@@ -30,7 +30,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleForm }) => {
           <LogIn className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
-        <p className="text-gray-600 mt-2">Sign in to your Olympics account</p>
+        <p className="text-gray-600 mt-2">Sign in to your Saudi Arabia Olympics account</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -86,7 +86,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleForm }) => {
         <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
           <strong>Demo Accounts:</strong><br />
           Super Admin: admin@olympics.com / password<br />
-          School Admin: school@example.com / password
+          Entity Admin: entity@example.com / password
         </div>
 
         <button

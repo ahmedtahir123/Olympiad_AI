@@ -3,18 +3,18 @@ import { School, Users, Calendar, DollarSign, TrendingUp, Trophy, AlertCircle } 
 
 export const SuperAdminDashboard: React.FC = () => {
   const stats = [
-    { label: 'Registered Schools', value: '156', icon: School, color: 'from-blue-500 to-blue-600', bgColor: 'bg-blue-50', change: '+12%' },
+    { label: 'Registered Entity', value: '156', icon: School, color: 'from-blue-500 to-blue-600', bgColor: 'bg-blue-50', change: '+12%' },
     { label: 'Total Participants', value: '2,847', icon: Users, color: 'from-green-500 to-green-600', bgColor: 'bg-green-50', change: '+18%' },
-    { label: 'Active Events', value: '24', icon: Calendar, color: 'from-purple-500 to-purple-600', bgColor: 'bg-purple-50', change: '+5%' },
+    { label: 'Active Compitions', value: '24', icon: Calendar, color: 'from-purple-500 to-purple-600', bgColor: 'bg-purple-50', change: '+5%' },
     { label: 'Revenue Generated', value: '$45,230', icon: DollarSign, color: 'from-yellow-500 to-yellow-600', bgColor: 'bg-yellow-50', change: '+23%' },
   ];
 
   const recentActivities = [
-    { type: 'school', message: 'Riverside High School registered for Basketball Championship', time: '2 hours ago', status: 'success' },
+    { type: 'entity', message: 'Riverside High Entity registered for Basketball Championship', time: '2 hours ago', status: 'success' },
     { type: 'payment', message: 'Payment of $350 received from Springfield High', time: '4 hours ago', status: 'success' },
     { type: 'event', message: 'Mathematics Competition results published', time: '6 hours ago', status: 'info' },
     { type: 'alert', message: 'Low participation in Science Fair - 5 spots remaining', time: '8 hours ago', status: 'warning' },
-    { type: 'school', message: 'New school registration: Oakwood Academy', time: '12 hours ago', status: 'info' },
+    { type: 'entity', message: 'New entity registration: Oakwood Academy', time: '12 hours ago', status: 'info' },
   ];
 
   const upcomingEvents = [
@@ -25,17 +25,17 @@ export const SuperAdminDashboard: React.FC = () => {
   ];
 
   const topSchools = [
-    { name: 'Springfield High School', participants: 45, events: 8, revenue: '$1,250' },
+    { name: 'Springfield High Entity', participants: 45, events: 8, revenue: '$1,250' },
     { name: 'Riverside Academy', participants: 38, events: 6, revenue: '$980' },
     { name: 'Oakwood High', participants: 32, events: 7, revenue: '$1,100' },
-    { name: 'Central School', participants: 29, events: 5, revenue: '$750' },
+    { name: 'Central Entity', participants: 29, events: 5, revenue: '$750' },
   ];
 
   return (
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Super Admin Dashboard</h1>
-        <p className="text-gray-600 mt-2">Overview of the Olympics management system</p>
+        <p className="text-gray-600 mt-2">Overview of the Saudi Arabia Olympics management system</p>
       </div>
 
       {/* Stats Cards */}
@@ -72,7 +72,7 @@ export const SuperAdminDashboard: React.FC = () => {
                   activity.status === 'warning' ? 'bg-yellow-100 text-yellow-600' :
                   'bg-blue-100 text-blue-600'
                 }`}>
-                  {activity.type === 'school' && <School className="w-4 h-4" />}
+                  {activity.type === 'entity' && <School className="w-4 h-4" />}
                   {activity.type === 'payment' && <DollarSign className="w-4 h-4" />}
                   {activity.type === 'event' && <Trophy className="w-4 h-4" />}
                   {activity.type === 'alert' && <AlertCircle className="w-4 h-4" />}
@@ -86,9 +86,9 @@ export const SuperAdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Upcoming Events */}
+        {/* Upcoming Compitions */}
         <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Events</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Compitions</h2>
           <div className="space-y-4">
             {upcomingEvents.map((event, index) => (
               <div key={index} className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors duration-200">
@@ -106,34 +106,34 @@ export const SuperAdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Top Schools */}
+      {/* Top Entity */}
       <div className="bg-white rounded-xl shadow-lg p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Top Participating Schools</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Top Participating Entity</h2>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">School Name</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Entity Name</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Participants</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Events</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Compitions</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Revenue</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
               </tr>
             </thead>
             <tbody>
-              {topSchools.map((school, index) => (
+              {topSchools.map((entity, index) => (
                 <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200">
                   <td className="py-4 px-4">
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
-                        {school.name.charAt(0)}
+                        {entity.name.charAt(0)}
                       </div>
-                      <span className="font-medium text-gray-900">{school.name}</span>
+                      <span className="font-medium text-gray-900">{entity.name}</span>
                     </div>
                   </td>
-                  <td className="py-4 px-4 text-gray-600">{school.participants}</td>
-                  <td className="py-4 px-4 text-gray-600">{school.events}</td>
-                  <td className="py-4 px-4 font-semibold text-green-600">{school.revenue}</td>
+                  <td className="py-4 px-4 text-gray-600">{entity.participants}</td>
+                  <td className="py-4 px-4 text-gray-600">{entity.events}</td>
+                  <td className="py-4 px-4 font-semibold text-green-600">{entity.revenue}</td>
                   <td className="py-4 px-4">
                     <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
                       Active

@@ -132,7 +132,7 @@ export const EventManagement: React.FC = () => {
       <div className="bg-white rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">
-            {editingEvent ? 'Edit Event' : 'Create New Event'}
+            {editingEvent ? 'Edit Compition' : 'Create New Compition'}
           </h2>
           <button
             onClick={() => {
@@ -150,7 +150,7 @@ export const EventManagement: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Event Name *
+                Compition Name *
               </label>
               <input
                 type="text"
@@ -178,7 +178,7 @@ export const EventManagement: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Event Type *
+                Compition Type *
               </label>
               <select 
                 required
@@ -195,7 +195,7 @@ export const EventManagement: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Event Date *
+                Compition Date *
               </label>
               <input
                 type="date"
@@ -284,7 +284,7 @@ export const EventManagement: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Event Description *
+              Compition Description *
             </label>
             <textarea
               required
@@ -315,7 +315,7 @@ export const EventManagement: React.FC = () => {
             >
               {createEventMutation.loading || updateEventMutation.loading
                 ? 'Saving...'
-                : editingEvent ? 'Update Event' : 'Create & Publish'}
+                : editingEvent ? 'Update Compition' : 'Create & Publish'}
             </button>
           </div>
         </form>
@@ -374,7 +374,7 @@ export const EventManagement: React.FC = () => {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Event Management</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Compition Management</h1>
         <p className="text-gray-600 mt-2">Create and manage academic and sporting events</p>
       </div>
 
@@ -423,7 +423,7 @@ export const EventManagement: React.FC = () => {
             className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
           >
             <Plus className="w-5 h-5" />
-            Create Event
+            Create Compition
           </button>
         </div>
       </div>
@@ -433,7 +433,7 @@ export const EventManagement: React.FC = () => {
         <div className="bg-white rounded-xl p-6 shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Total Events</p>
+              <p className="text-gray-600 text-sm">Total Compitions</p>
               <p className="text-3xl font-bold text-gray-900">{events?.length || 0}</p>
             </div>
             <Calendar className="w-8 h-8 text-blue-600" />
@@ -443,7 +443,7 @@ export const EventManagement: React.FC = () => {
         <div className="bg-white rounded-xl p-6 shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Active Events</p>
+              <p className="text-gray-600 text-sm">Active Compitions</p>
               <p className="text-3xl font-bold text-gray-900">
                 {events?.filter(e => e.status === 'active').length || 0}
               </p>
@@ -477,7 +477,7 @@ export const EventManagement: React.FC = () => {
         </div>
       </div>
 
-      {/* Events Grid */}
+      {/* Compitions Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredEvents.map((event) => (
           <div key={event.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
@@ -553,7 +553,7 @@ export const EventManagement: React.FC = () => {
       {filteredEvents.length === 0 && !loading && (
         <div className="text-center py-12">
           <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No events found</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No Compition found</h3>
           <p className="text-gray-600">
             {searchTerm || filterCategory !== 'all' || filterStatus !== 'all'
               ? 'Try adjusting your search or filters'
@@ -563,7 +563,7 @@ export const EventManagement: React.FC = () => {
         </div>
       )}
 
-      {/* Event Details Modal */}
+      {/* Compition Details Modal */}
       {selectedEvent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -584,7 +584,7 @@ export const EventManagement: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Event Details</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Compition Details</h3>
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-gray-700">Description</p>

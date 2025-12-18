@@ -51,8 +51,8 @@ class AuthService {
           id: '2',
           email: credentials.email,
           role: 'school_admin',
-          schoolId: 'school-1',
-          schoolName: 'Springfield High School',
+          schoolId: 'entity-1',
+          schoolName: 'Springfield High Entity',
           name: 'John Smith',
           avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop'
         };
@@ -89,7 +89,7 @@ class AuthService {
         id: 'user-' + Date.now(),
         email: userData.email,
         role: 'school_admin',
-        schoolId: 'school-' + Date.now(),
+        schoolId: 'entity-' + Date.now(),
         schoolName: userData.schoolName,
         name: userData.name,
         avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop'

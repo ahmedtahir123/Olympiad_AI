@@ -118,7 +118,7 @@ export const PaymentManagement: React.FC = () => {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Payment Management</h1>
-        <p className="text-gray-600 mt-2">Monitor and manage all school payments</p>
+        <p className="text-gray-600 mt-2">Monitor and manage all entity payments</p>
       </div>
 
       {/* Stats Cards */}
@@ -172,7 +172,7 @@ export const PaymentManagement: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Search schools or invoice numbers..."
+                placeholder="Search entities or invoice numbers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -222,7 +222,7 @@ export const PaymentManagement: React.FC = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Invoice</th>
-                <th className="text-left py-4 px-6 font-semibold text-gray-700">School</th>
+                <th className="text-left py-4 px-6 font-semibold text-gray-700">Entity</th>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Amount</th>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Method</th>
                 <th className="text-left py-4 px-6 font-semibold text-gray-700">Date</th>
@@ -309,7 +309,7 @@ export const PaymentManagement: React.FC = () => {
                 <h3 className="font-semibold text-gray-900 mb-4">Payment Information</h3>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm font-medium text-gray-700">School</p>
+                    <p className="text-sm font-medium text-gray-700">Entity</p>
                     <p className="text-gray-900">{selectedPayment.schoolName}</p>
                   </div>
                   <div>
@@ -350,7 +350,7 @@ export const PaymentManagement: React.FC = () => {
             </div>
 
             <div className="mb-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Events Included</h3>
+              <h3 className="font-semibold text-gray-900 mb-4">Compitions Included</h3>
               <div className="grid grid-cols-1 gap-2">
                 {selectedPayment.eventsIncluded.map((event, index) => (
                   <div key={index} className="p-3 bg-gray-50 rounded-lg">

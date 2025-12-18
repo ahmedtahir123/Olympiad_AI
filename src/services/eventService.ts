@@ -52,7 +52,7 @@ class EventService {
         name: 'Basketball Championship',
         category: 'sporting',
         type: 'Team',
-        description: 'Inter-school basketball tournament with teams competing for the championship title.',
+        description: 'Inter-entity basketball tournament with teams competing for the championship title.',
         date: '2025-03-20',
         venue: 'Sports Complex Arena',
         fee: 200,
@@ -129,7 +129,7 @@ class EventService {
     return {
       data: filteredEvents,
       success: true,
-      message: 'Events retrieved successfully'
+      message: 'Compitions retrieved successfully'
     };
   }
 
@@ -141,7 +141,7 @@ class EventService {
     
     if (!event) {
       throw {
-        message: 'Event not found',
+        message: 'Compition not found',
         status: 404
       };
     }
@@ -149,7 +149,7 @@ class EventService {
     return {
       data: event,
       success: true,
-      message: 'Event retrieved successfully'
+      message: 'Compition retrieved successfully'
     };
   }
 
@@ -166,7 +166,7 @@ class EventService {
     return {
       data: newEvent,
       success: true,
-      message: 'Event created successfully'
+      message: 'Compition created successfully'
     };
   }
 
@@ -184,7 +184,7 @@ class EventService {
     return {
       data: updatedEvent,
       success: true,
-      message: 'Event updated successfully'
+      message: 'Compition updated successfully'
     };
   }
 
@@ -192,9 +192,9 @@ class EventService {
     await new Promise(resolve => setTimeout(resolve, 600));
     
     return {
-      data: { message: 'Event deleted successfully' },
+      data: { message: 'Compition deleted successfully' },
       success: true,
-      message: 'Event deleted successfully'
+      message: 'Compition deleted successfully'
     };
   }
 

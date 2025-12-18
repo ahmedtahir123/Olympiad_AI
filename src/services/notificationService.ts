@@ -25,7 +25,7 @@ class NotificationService {
       {
         id: '1',
         title: 'Registration Deadline Extended',
-        message: 'The registration deadline for Mathematics Competition has been extended to March 1st, 2025. Schools can still register their participants.',
+        message: 'The registration deadline for Mathematics Competition has been extended to March 1st, 2025. Entities can still register their participants.',
         type: 'info',
         targetSchools: ['1', '2', '4'],
         createdAt: '2025-01-25T10:00:00Z',
@@ -50,7 +50,7 @@ class NotificationService {
       },
       {
         id: '4',
-        title: 'New Event Added: Swimming Championship',
+        title: 'New Compition Added: Swimming Championship',
         message: 'We are excited to announce a new event - Swimming Championship. Registration is now open for all age groups.',
         type: 'info',
         createdAt: '2025-01-22T09:15:00Z',
@@ -66,7 +66,7 @@ class NotificationService {
       }
       if (filters.targetSchools && filters.targetSchools.length > 0) {
         filteredAnnouncements = filteredAnnouncements.filter(a => 
-          !a.targetSchools || a.targetSchools.some(school => filters.targetSchools!.includes(school))
+          !a.targetSchools || a.targetSchools.some(entity => filters.targetSchools!.includes(entity))
         );
       }
     }
@@ -149,7 +149,7 @@ class NotificationService {
   }
 
   async getSchoolAnnouncements(schoolId: string): Promise<ApiResponse<Announcement[]>> {
-    return apiClient.get<Announcement[]>(`/notifications/school/${schoolId}`);
+    return apiClient.get<Announcement[]>(`/notifications/entity/${schoolId}`);
   }
 
   async markAsRead(announcementId: string): Promise<ApiResponse<{ message: string }>> {
@@ -160,7 +160,7 @@ class NotificationService {
     title: string;
     message: string;
     type: 'info' | 'warning' | 'success';
-    targetType: 'all' | 'schools' | 'event_participants';
+    targetType: 'all' | 'entities' | 'event_participants';
     targetIds?: string[];
     channels: ('email' | 'sms' | 'push')[];
   }): Promise<ApiResponse<{ 

@@ -58,8 +58,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onToggleForm }) => {
         <div className="w-16 h-16 bg-gradient-to-r from-green-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
           <UserPlus className="w-8 h-8 text-white" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">Join Olympics</h2>
-        <p className="text-gray-600 mt-2">Create your school account</p>
+        <h2 className="text-2xl font-bold text-gray-900">Join Saudi Arabia Olympics</h2>
+        <p className="text-gray-600 mt-2">Create your entity account</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -84,7 +84,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onToggleForm }) => {
 
         <div>
           <label htmlFor="schoolName" className="block text-sm font-medium text-gray-700 mb-2">
-            School Name
+            Entity Name
           </label>
           <div className="relative">
             <School className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -95,7 +95,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onToggleForm }) => {
               value={formData.schoolName}
               onChange={handleChange}
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-              placeholder="Enter school name"
+              placeholder="Enter entity name" 
               required
             />
           </div>
@@ -141,7 +141,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onToggleForm }) => {
 
         <div>
           <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-            School Address
+            Entity Address
           </label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -152,7 +152,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onToggleForm }) => {
               value={formData.address}
               onChange={handleChange}
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-              placeholder="Enter school address"
+              placeholder="Enter entity address"
               required
             />
           </div>

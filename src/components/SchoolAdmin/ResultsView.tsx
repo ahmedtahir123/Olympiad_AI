@@ -85,7 +85,7 @@ export const ResultsView: React.FC = () => {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Results & Achievements</h1>
-        <p className="text-gray-600 mt-2">View your school's performance and download certificates</p>
+        <p className="text-gray-600 mt-2">View your entity's performance and download certificates</p>
       </div>
 
       {/* Stats Overview */}
@@ -152,7 +152,7 @@ export const ResultsView: React.FC = () => {
               onChange={(e) => setFilterEvent(e.target.value)}
               className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="all">All Events</option>
+              <option value="all">All Compitions</option>
               <option value="Mathematics Competition">Mathematics Competition</option>
               <option value="100m Sprint">100m Sprint</option>
               <option value="Science Fair">Science Fair</option>
