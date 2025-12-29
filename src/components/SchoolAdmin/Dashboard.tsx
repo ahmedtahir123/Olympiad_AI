@@ -6,7 +6,7 @@ export const SchoolAdminDashboard: React.FC = () => {
   const { user } = useAuth();
 
   const stats = [
-    { label: 'Compitions Joined', value: '12', icon: Calendar, color: 'from-blue-500 to-blue-600', bgColor: 'bg-blue-50' },
+    { label: 'Competitions Joined', value: '12', icon: Calendar, color: 'from-blue-500 to-blue-600', bgColor: 'bg-blue-50' },
     { label: 'Total Participants', value: '45', icon: Users, color: 'from-green-500 to-green-600', bgColor: 'bg-green-50' },
     { label: 'Payment Status', value: 'Paid', icon: CreditCard, color: 'from-purple-500 to-purple-600', bgColor: 'bg-purple-50' },
     { label: 'Results Available', value: '8', icon: Trophy, color: 'from-yellow-500 to-yellow-600', bgColor: 'bg-yellow-50' },
@@ -85,10 +85,10 @@ export const SchoolAdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Upcoming Compitions */}
+        {/* Upcoming Competitions */}
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Upcoming Compitions</h2>
+            <h2 className="text-xl font-bold text-gray-900">Upcoming Competitions</h2>
             <Calendar className="w-6 h-6 text-blue-500" />
           </div>
           <div className="space-y-4">
@@ -116,11 +116,11 @@ export const SchoolAdminDashboard: React.FC = () => {
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg p-4 text-left transition-all duration-200 transform hover:scale-105">
             <Users className="w-6 h-6 mb-2" />
             <h3 className="font-semibold">Add Participants</h3>
-            <p className="text-sm opacity-80">Register new students</p>
+            <p className="text-sm opacity-80">Register new participants</p>
           </button>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg p-4 text-left transition-all duration-200 transform hover:scale-105">
             <Calendar className="w-6 h-6 mb-2" />
-            <h3 className="font-semibold">Browse Compitions</h3>
+            <h3 className="font-semibold">Browse Competitions</h3>
             <p className="text-sm opacity-80">Find new competitions</p>
           </button>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg p-4 text-left transition-all duration-200 transform hover:scale-105">

@@ -152,7 +152,7 @@ export const ResultsView: React.FC = () => {
               onChange={(e) => setFilterEvent(e.target.value)}
               className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="all">All Compitions</option>
+              <option value="all">All Competitions</option>
               <option value="Mathematics Competition">Mathematics Competition</option>
               <option value="100m Sprint">100m Sprint</option>
               <option value="Science Fair">Science Fair</option>

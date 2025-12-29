@@ -281,7 +281,7 @@ export const ProfileSettings: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Total Students
+                  Total Participants
                 </label>
                 <input
                   type="text"
@@ -352,7 +352,7 @@ export const ProfileSettings: React.FC = () => {
               <div className="text-center p-4 bg-blue-50 rounded-lg">
                 <School className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                 <p className="text-2xl font-bold text-gray-900">8</p>
-                <p className="text-sm text-gray-600">Compitions Joined</p>
+                <p className="text-sm text-gray-600">Competitions Joined</p>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
                 <User className="w-8 h-8 text-green-600 mx-auto mb-2" />

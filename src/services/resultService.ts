@@ -106,7 +106,7 @@ class ResultService {
     
     const newResult: ParticipantResult = {
       eventId: resultData.eventId,
-      eventName: 'Compition Name', // Would be fetched from event service
+      eventName: 'Competition Name', // Would be fetched from event service
       position: resultData.position,
       score: resultData.score,
       time: resultData.time,
@@ -129,7 +129,7 @@ class ResultService {
     
     const results: ParticipantResult[] = bulkData.results.map(result => ({
       eventId: bulkData.eventId,
-      eventName: 'Compition Name',
+      eventName: 'Competition Name',
       position: result.position,
       score: result.score,
       time: result.time,

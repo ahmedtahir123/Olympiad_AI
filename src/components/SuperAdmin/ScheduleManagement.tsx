@@ -2,11 +2,12 @@ import React, { useCallback, useState } from 'react';
 import { Calendar, Clock, MapPin, Plus, Edit, Trash2, Users, Bell } from 'lucide-react';
 import { eventService } from '../../services/eventService';
 import { useApi, useMutation } from '../../hooks/useApi';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ScheduleManagement: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-
+   const { t } = useLanguage();
    const fetchEvents = useCallback(() => eventService.getAllEvents(), []);
     
       const { data: events, loading, error, refetch } = useApi(fetchEvents, {
@@ -64,7 +65,7 @@ export const ScheduleManagement: React.FC = () => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Schedule Compition</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{t('scheduleCompetition')}</h2>
           <button
             onClick={() => {
               setShowCreateModal(false);
@@ -79,7 +80,7 @@ export const ScheduleManagement: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Compition Name *
+              {t('competionName')} *
             </label>
             <select 
               required
@@ -87,7 +88,7 @@ export const ScheduleManagement: React.FC = () => {
               onChange={(e) => setFormData({ ...formData, eventId: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="">Select an event</option>
+              <option value="">{t('selectEvent')}</option>
               {events?.map((event) => (
                 <option key={event.id} value={event.id}>
                   {event.name}
@@ -99,7 +100,7 @@ export const ScheduleManagement: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Date *
+                {t('date')} *
               </label>
               <input
                 type="date"
@@ -112,7 +113,7 @@ export const ScheduleManagement: React.FC = () => {
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Venue *
+                {t('venue')} *
               </label>
               <select 
                 required
@@ -120,7 +121,7 @@ export const ScheduleManagement: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="">Select venue</option>
+                <option value="">{t('selectVenue')}</option>
                 {venues.map(venue => (
                   <option key={venue} value={venue}>{venue}</option>
                 ))}
@@ -129,7 +130,7 @@ export const ScheduleManagement: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Start Time *
+                {t('startTime')} *
               </label>
               <input
                 type="time"
@@ -142,7 +143,7 @@ export const ScheduleManagement: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                End Time *
+                {t('endTime')} *
               </label>
               <input
                 type="time"
@@ -156,7 +157,7 @@ export const ScheduleManagement: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Special Instructions
+              {t('specialInstructions')}
             </label>
             <textarea
               rows={4}
@@ -176,20 +177,20 @@ export const ScheduleManagement: React.FC = () => {
               }}
               className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg hover:bg-gray-200 transition-colors"
             >
-              Cancel
+              {t('cancel')}
             </button>
             <button
               type="button"
               className="flex-1 bg-gray-600 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
             >
-              Save as Draft
+              {t('saveDraft')}
             </button>
             <button
               type="submit"
               disabled={createScheduleMutation.loading}
               className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50"
             >
-              {createScheduleMutation.loading ? 'Scheduling...' : 'Schedule Compition'}
+              {createScheduleMutation.loading ? t('scheduling') : t('scheduleCompetition')}
             </button>
           </div>
         </form>
@@ -241,7 +242,7 @@ export const ScheduleManagement: React.FC = () => {
               <Calendar className="w-5 h-5" />
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">Error loading schedule</h3>
+              <h3 className="text-sm font-medium text-red-800">{t('errorLoadingSchedule')}</h3>
               <p className="text-sm text-red-700 mt-1">{error.message}</p>
             </div>
           </div>
@@ -249,7 +250,7 @@ export const ScheduleManagement: React.FC = () => {
             onClick={() => refetch()}
             className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
           >
-            Try Again
+            {t('tryAgain')}
           </button>
         </div>
       </div>
@@ -259,8 +260,8 @@ export const ScheduleManagement: React.FC = () => {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Schedule Management</h1>
-        <p className="text-gray-600 mt-2">Manage event schedules, venues, and time slots</p>
+        <h1 className="text-3xl font-bold text-gray-900">{t('scheduleTitle')}</h1>
+        <p className="text-gray-600 mt-2">{t('scheduleSubtitle')}</p>
       </div>
 
       {/* Header Actions */}
@@ -270,7 +271,7 @@ export const ScheduleManagement: React.FC = () => {
             <Calendar className="w-6 h-6 text-blue-600" />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Select Date
+                {t('selectDate')}
               </label>
               <input
                 type="date"
@@ -284,14 +285,14 @@ export const ScheduleManagement: React.FC = () => {
           <div className="flex gap-3">
             <button className="flex items-center gap-2 bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-colors">
               <Bell className="w-5 h-5" />
-              Send Notifications
+              {t('sendNotifications')}
             </button>
             <button
               onClick={() => setShowCreateModal(true)}
               className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
             >
               <Plus className="w-5 h-5" />
-              Schedule Compition
+              {t('scheduleCompetition')}
             </button>
           </div>
         </div>
@@ -320,7 +321,7 @@ export const ScheduleManagement: React.FC = () => {
                         <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
                           <div className="flex items-center">
                             <Clock className="w-4 h-4 mr-1" />
-                            All Day Compition
+                            {t('allDayCompetition')}
                           </div>
                           <div className="flex items-center">
                             <MapPin className="w-4 h-4 mr-1" />
@@ -328,7 +329,7 @@ export const ScheduleManagement: React.FC = () => {
                           </div>
                           <div className="flex items-center">
                             <Users className="w-4 h-4 mr-1" />
-                            {event.currentParticipants || 0} participants
+                            {event.currentParticipants || 0} {t('participants')}
                           </div>
                         </div>
                       </div>
@@ -340,15 +341,15 @@ export const ScheduleManagement: React.FC = () => {
                     <div className="flex gap-2">
                       <button className="bg-blue-100 text-blue-700 py-1 px-3 rounded hover:bg-blue-200 transition-colors flex items-center gap-1">
                         <Edit className="w-4 h-4" />
-                        Edit
+                        {t('edit')}
                       </button>
                       <button className="bg-red-100 text-red-700 py-1 px-3 rounded hover:bg-red-200 transition-colors flex items-center gap-1">
                         <Trash2 className="w-4 h-4" />
-                        Delete
+                        {t('delete')}
                       </button>
                       <button className="bg-green-100 text-green-700 py-1 px-3 rounded hover:bg-green-200 transition-colors flex items-center gap-1">
                         <Bell className="w-4 h-4" />
-                        Notify
+                        {t('notify')}
                       </button>
                     </div>
                   </div>
@@ -357,24 +358,24 @@ export const ScheduleManagement: React.FC = () => {
             ) : (
               <div className="text-center py-12">
                 <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Compitions Scheduled</h3>
-                <p className="text-gray-500 mb-4">No events are scheduled for this date</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('noEvents')}</h3>
+                <p className="text-gray-500 mb-4">{t('noEventScheduled')}</p>
                 <button
                   onClick={() => setShowCreateModal(true)}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
                 >
-                  Schedule an Compition
+                  {t('scheduleCompetition')}
                 </button>
               </div>
             )}
           </div>
         </div>
 
-        {/* Upcoming Compitions & Venue Status */}
+        {/* Upcoming Competitions & Venue Status */}
         <div className="space-y-6">
-          {/* Upcoming Compitions */}
+          {/* Upcoming Competitions */}
           <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Compitions</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">{t('upcomingCompetitions')}</h2>
             <div className="space-y-4">
               {upcomingEvents.slice(0, 5).map((event) => (
                 <div key={event.id} className="p-3 bg-gray-50 rounded-lg">
@@ -394,7 +395,7 @@ export const ScheduleManagement: React.FC = () => {
 
           {/* Venue Availability */}
           <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Venue Status</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">{t('venueStatus')}</h2>
             <div className="space-y-3">
               {venues.slice(0, 6).map((venue) => {
                 const isOccupied = filteredEvents.some(event => event.venue === venue);
@@ -407,7 +408,7 @@ export const ScheduleManagement: React.FC = () => {
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       isOccupied ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
                     }`}>
-                      {isOccupied ? 'Occupied' : 'Available'}
+                      {isOccupied ? t('Occupied') : t('Available')}
                     </span>
                   </div>
                 );

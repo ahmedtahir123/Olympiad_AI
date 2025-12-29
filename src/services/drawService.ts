@@ -156,7 +156,7 @@ class DrawService {
     const newDraw: CompetitionDraw = {
       id: 'draw-' + Date.now(),
       eventId: drawData.eventId,
-      eventName: 'Compition Name', // Would be fetched from event service
+      eventName: 'Competition Name', // Would be fetched from event service
       drawType: drawData.drawType,
       totalParticipants: drawData.participants.length,
       totalRounds: Math.ceil(Math.log2(drawData.participants.length)),
