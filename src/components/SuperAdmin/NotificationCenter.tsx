@@ -4,8 +4,10 @@ import { notificationService } from '../../services/notificationService';
 import { schoolService } from '../../services/schoolService';
 import { useApi, useMutation } from '../../hooks/useApi';
 import { Announcement } from '../../types';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const NotificationCenter: React.FC = () => {
+   const { t } = useLanguage();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
@@ -81,7 +83,7 @@ export const NotificationCenter: React.FC = () => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Create Announcement</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{t('createTitle')}</h2>
           <button
             onClick={() => {
               setShowCreateModal(false);
@@ -96,7 +98,7 @@ export const NotificationCenter: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Announcement Title *
+              {t('announcementTitle')} *
             </label>
             <input
               type="text"
@@ -110,7 +112,7 @@ export const NotificationCenter: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Message *
+              {t('message')} *
             </label>
             <textarea
               required
@@ -125,34 +127,34 @@ export const NotificationCenter: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Announcement Type *
+                {t('announcementType')} *
               </label>
               <select 
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="info">Information</option>
-                <option value="warning">Warning/Alert</option>
-                <option value="success">Success/Achievement</option>
+                <option value="info">{t('information')}</option>
+                <option value="warning">{t('warning')}</option>
+                <option value="success">{t('success')}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Target Audience *
+                {t('targetAudience')} *
               </label>
               <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option value="all">All Entity</option>
-                <option value="specific">Specific Entity</option>
-                <option value="event">Compition Participants</option>
+                <option value="all">{t('allEntity')}</option>
+                <option value="specific">{t('specificEntity')}</option>
+                <option value="event">{t('competitionParticipants')}</option>
               </select>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Select Entity (Optional)
+              {t('selectEntity')}
             </label>
             <div className="space-y-2 max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-3">
               {entities?.map(entity => (
@@ -189,7 +191,7 @@ export const NotificationCenter: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, sendEmail: e.target.checked })}
                 className="mr-2" 
               />
-              <span className="text-sm text-gray-700">Send email notification</span>
+              <span className="text-sm text-gray-700">{t('sendEmail')}</span>
             </label>
           </div>
 
@@ -201,7 +203,7 @@ export const NotificationCenter: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, sendSms: e.target.checked })}
                 className="mr-2" 
               />
-              <span className="text-sm text-gray-700">Send SMS notification</span>
+              <span className="text-sm text-gray-700">{t('sendSms')}</span>
             </label>
           </div>
 
@@ -214,20 +216,20 @@ export const NotificationCenter: React.FC = () => {
               }}
               className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg hover:bg-gray-200 transition-colors"
             >
-              Cancel
+              {t('cancel')}
             </button>
             <button
               type="button"
               className="flex-1 bg-gray-600 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
             >
-              Save as Draft
+              {t('saveDraft')}
             </button>
             <button
               type="submit"
               disabled={createAnnouncementMutation.loading}
               className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50"
             >
-              {createAnnouncementMutation.loading ? 'Sending...' : 'Send Announcement'}
+              {createAnnouncementMutation.loading ? t('sending') : t('sendAnnouncement')}
             </button>
           </div>
         </form>
@@ -283,7 +285,7 @@ export const NotificationCenter: React.FC = () => {
               <Bell className="w-5 h-5" />
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">Error loading announcements</h3>
+              <h3 className="text-sm font-medium text-red-800">{t('errorLoading')}</h3>
               <p className="text-sm text-red-700 mt-1">{error.message}</p>
             </div>
           </div>
@@ -291,7 +293,7 @@ export const NotificationCenter: React.FC = () => {
             onClick={() => refetch()}
             className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
           >
-            Try Again
+            {t('tryAgain')}
           </button>
         </div>
       </div>
@@ -301,8 +303,8 @@ export const NotificationCenter: React.FC = () => {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Notification Center</h1>
-        <p className="text-gray-600 mt-2">Send announcements and notifications to entities</p>
+        <h1 className="text-3xl font-bold text-gray-900">{t('notificationCenter')}</h1>
+        <p className="text-gray-600 mt-2">{t('notificationSubtitle')}</p>
       </div>
 
       {/* Header Actions */}
@@ -311,8 +313,8 @@ export const NotificationCenter: React.FC = () => {
           <div className="flex items-center gap-4">
             <Bell className="w-6 h-6 text-blue-600" />
             <div>
-              <h2 className="font-semibold text-gray-900">Communication Center</h2>
-              <p className="text-sm text-gray-600">Manage announcements and notifications</p>
+              <h2 className="font-semibold text-gray-900">{t('communicationCenter')}</h2>
+              <p className="text-sm text-gray-600">{t('manageCommunication')}</p>
             </div>
           </div>
           
@@ -321,7 +323,7 @@ export const NotificationCenter: React.FC = () => {
             className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
           >
             <Plus className="w-5 h-5" />
-            Create Announcement
+            {t('createAnnouncement')}
           </button>
         </div>
       </div>
@@ -333,9 +335,9 @@ export const NotificationCenter: React.FC = () => {
             <Users className="w-8 h-8 text-blue-200" />
             <span className="text-2xl font-bold">{entities?.length || 0}</span>
           </div>
-          <h3 className="font-semibold mb-2">All Entity</h3>
+          <h3 className="font-semibold mb-2">{t('allEntities')}</h3>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg px-4 py-2 text-sm transition-all">
-            Send to All
+            {t('sendToAll')}
           </button>
         </div>
         
@@ -344,9 +346,9 @@ export const NotificationCenter: React.FC = () => {
             <Calendar className="w-8 h-8 text-green-200" />
             <span className="text-2xl font-bold">24</span>
           </div>
-          <h3 className="font-semibold mb-2">Active Compitions</h3>
+          <h3 className="font-semibold mb-2">{t('activeCompetitions')}</h3>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg px-4 py-2 text-sm transition-all">
-            Compition Updates
+            {t('competitionUpdates')}
           </button>
         </div>
         
@@ -355,9 +357,9 @@ export const NotificationCenter: React.FC = () => {
             <Entity className="w-8 h-8 text-purple-200" />
             <span className="text-2xl font-bold">{entities?.filter(s => s.status === 'pending').length || 0}</span>
           </div>
-          <h3 className="font-semibold mb-2">Pending Entities</h3>
+          <h3 className="font-semibold mb-2">{t('pendingEntities')}</h3>
           <button className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg px-4 py-2 text-sm transition-all">
-            Send Reminders
+            {t('sendReminders')}
           </button>
         </div>
       </div>
@@ -365,13 +367,13 @@ export const NotificationCenter: React.FC = () => {
       {/* Announcements List */}
       <div className="bg-white rounded-xl shadow-lg p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Recent Announcements</h2>
+          <h2 className="text-xl font-bold text-gray-900">{t('recentAnnouncements')}</h2>
           <div className="flex gap-2">
             <button className="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors">
-              Filter
+              {t('filter')}
             </button>
             <button className="bg-blue-100 text-blue-700 py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors">
-              Export
+              {t('export')}
             </button>
           </div>
         </div>
@@ -387,13 +389,13 @@ export const NotificationCenter: React.FC = () => {
                     <p className="text-gray-700 mb-3">{announcement.message}</p>
                     
                     <div className="flex items-center gap-4 text-sm text-gray-600">
-                      <span>By {announcement.createdBy}</span>
+                      <span>{t('by')} {announcement.createdBy}</span>
                       <span>•</span>
                       <span>{new Date(announcement.createdAt).toLocaleDateString()}</span>
                       {announcement.targetSchools && (
                         <>
                           <span>•</span>
-                          <span>Sent to {announcement.targetSchools.length} entities</span>
+                          <span>{t('sentTo')} {announcement.targetSchools.length} {t('entities')}</span>
                         </>
                       )}
                     </div>
@@ -426,13 +428,13 @@ export const NotificationCenter: React.FC = () => {
                     const entity = entities?.find(s => s.id === schoolId);
                     return (
                       <span key={index} className="px-2 py-1 bg-white bg-opacity-50 rounded text-sm">
-                        {entity?.name || `Entity ${index + 1}`}
+                        {entity?.name || `${t('entity')} ${index + 1}`}
                       </span>
                     );
                   })}
                   {announcement.targetSchools.length > 3 && (
                     <span className="px-2 py-1 bg-white bg-opacity-50 rounded text-sm">
-                      +{announcement.targetSchools.length - 3} more
+                      +{announcement.targetSchools.length - 3} {t('more')}
                     </span>
                   )}
                 </div>
@@ -466,22 +468,22 @@ export const NotificationCenter: React.FC = () => {
 
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">Message</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">{t('message')}</h3>
                 <p className="text-gray-700 leading-relaxed">{selectedAnnouncement.message}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Details</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">{t('details')}</h3>
                   <div className="space-y-2 text-sm">
-                    <p><span className="font-medium">Created by:</span> {selectedAnnouncement.createdBy}</p>
-                    <p><span className="font-medium">Date:</span> {new Date(selectedAnnouncement.createdAt).toLocaleString()}</p>
-                    <p><span className="font-medium">Type:</span> {selectedAnnouncement.type}</p>
+                    <p><span className="font-medium">{t('createdBy')}:</span> {selectedAnnouncement.createdBy}</p>
+                    <p><span className="font-medium">{t('date')}:</span> {new Date(selectedAnnouncement.createdAt).toLocaleString()}</p>
+                    <p><span className="font-medium">{t('type')}:</span> {selectedAnnouncement.type}</p>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Recipients</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">{t('recipients')}</h3>
                   {selectedAnnouncement.targetSchools ? (
                     <div className="space-y-1">
                       {selectedAnnouncement.targetSchools.map((schoolId, index) => {
@@ -492,7 +494,7 @@ export const NotificationCenter: React.FC = () => {
                       })}
                     </div>
                   ) : (
-                    <p className="text-sm text-gray-700">All registered entities</p>
+                    <p className="text-sm text-gray-700">{t('allRegisteredEntities')}</p>
                   )}
                 </div>
               </div>
@@ -504,11 +506,11 @@ export const NotificationCenter: React.FC = () => {
                   className="flex-1 bg-blue-100 text-blue-700 py-3 rounded-lg hover:bg-blue-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <Send className="w-5 h-5" />
-                  {resendAnnouncementMutation.loading ? 'Resending...' : 'Resend'}
+                  {resendAnnouncementMutation.loading ? t('resending') : t('resend')}
                 </button>
                 <button className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
                   <Edit className="w-5 h-5" />
-                  Edit
+                  {t('edit')}
                 </button>
               </div>
             </div>

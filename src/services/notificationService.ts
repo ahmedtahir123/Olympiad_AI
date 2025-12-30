@@ -50,7 +50,7 @@ class NotificationService {
       },
       {
         id: '4',
-        title: 'New Compition Added: Swimming Championship',
+        title: 'New competition Added: Swimming Championship',
         message: 'We are excited to announce a new event - Swimming Championship. Registration is now open for all age groups.',
         type: 'info',
         createdAt: '2025-01-22T09:15:00Z',

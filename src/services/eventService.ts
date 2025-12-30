@@ -129,7 +129,7 @@ class EventService {
     return {
       data: filteredEvents,
       success: true,
-      message: 'Compitions retrieved successfully'
+      message: 'Competitions retrieved successfully'
     };
   }
 
@@ -141,7 +141,7 @@ class EventService {
     
     if (!event) {
       throw {
-        message: 'Compition not found',
+        message: 'Competition not found',
         status: 404
       };
     }
@@ -149,7 +149,7 @@ class EventService {
     return {
       data: event,
       success: true,
-      message: 'Compition retrieved successfully'
+      message: 'Competition retrieved successfully'
     };
   }
 
@@ -166,7 +166,7 @@ class EventService {
     return {
       data: newEvent,
       success: true,
-      message: 'Compition created successfully'
+      message: 'Competition created successfully'
     };
   }
 
@@ -184,7 +184,7 @@ class EventService {
     return {
       data: updatedEvent,
       success: true,
-      message: 'Compition updated successfully'
+      message: 'Competition updated successfully'
     };
   }
 
@@ -192,9 +192,9 @@ class EventService {
     await new Promise(resolve => setTimeout(resolve, 600));
     
     return {
-      data: { message: 'Compition deleted successfully' },
+      data: { message: 'Competition deleted successfully' },
       success: true,
-      message: 'Compition deleted successfully'
+      message: 'Competition deleted successfully'
     };
   }
 

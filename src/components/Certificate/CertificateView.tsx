@@ -4,6 +4,7 @@ import { ArrowLeft, Award, Download, Medal, Trophy } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface CertificateData {
   participantName: string;
@@ -21,7 +22,9 @@ export const CertificateView: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const certificateRef = useRef<HTMLDivElement>(null);
-  
+  const { t } = useLanguage();
+
+
   const [certificateData, setCertificateData] = useState<CertificateData | null>(null);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
@@ -29,11 +32,11 @@ export const CertificateView: React.FC = () => {
   useEffect(() => {
     const fetchCertificateData = async () => {
       if (!resultId) return;
-      
+
       try {
         // Mock certificate data - in real app, this would come from the API
         await new Promise(resolve => setTimeout(resolve, 800)); // Simulate API call
-        
+
         const mockData: CertificateData = {
           participantName: 'John Doe',
           eventName: 'Mathematics Competition',
@@ -43,7 +46,7 @@ export const CertificateView: React.FC = () => {
           schoolName: user?.schoolName || 'Springfield High Entity',
           certificateId: `CERT-${resultId}-2025`
         };
-        
+
         setCertificateData(mockData);
       } catch (error) {
         console.error('Error fetching certificate data:', error);
@@ -66,22 +69,22 @@ export const CertificateView: React.FC = () => {
 
   const downloadCertificate = async () => {
     if (!certificateRef.current || !certificateData) return;
-    
+
     setDownloading(true);
-    
+
     try {
       const canvas = await html2canvas(certificateRef.current, {
         scale: 2,
         useCORS: true,
         backgroundColor: '#ffffff'
       });
-      
+
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('landscape', 'mm', 'a4');
-      
+
       const imgWidth = 297; // A4 landscape width
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
+
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save(`${certificateData.participantName}_${certificateData.eventName}_Certificate.pdf`);
     } catch (error) {
@@ -125,6 +128,7 @@ export const CertificateView: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
+
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <button
@@ -132,9 +136,9 @@ export const CertificateView: React.FC = () => {
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            Back to Results
+            {t('certificateBackToResults')}
           </button>
-          
+
           <div className="flex gap-3">
             <button
               onClick={downloadCertificate}
@@ -142,7 +146,9 @@ export const CertificateView: React.FC = () => {
               className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
               <Download className="w-5 h-5" />
-              {downloading ? 'Generating PDF...' : 'Download Certificate'}
+              {downloading
+                ? t('certificateGeneratingPdf')
+                : t('certificateDownload')}
             </button>
           </div>
         </div>
@@ -152,19 +158,23 @@ export const CertificateView: React.FC = () => {
           <div
             ref={certificateRef}
             className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 p-16"
-            style={{ aspectRatio: '297/210' }} // A4 landscape ratio
+            style={{ aspectRatio: '297/210' }}
           >
-            {/* Decorative Border */}
+            {/* Decorative Borders */}
             <div className="absolute inset-4 border-4 border-double border-blue-600 rounded-lg"></div>
             <div className="absolute inset-8 border-2 border-blue-300 rounded-lg"></div>
-            
+
             {/* Header */}
             <div className="text-center mb-12">
               <div className="flex justify-center items-center gap-4 mb-6">
                 <Trophy className="w-16 h-16 text-yellow-600" />
                 <div>
-                  <h1 className="text-4xl font-bold text-gray-900 mb-2">CERTIFICATE OF ACHIEVEMENT</h1>
-                  <p className="text-lg text-gray-600">Saudi Arabia Olympics System for Entity</p>
+                  <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    {t('certificateTitle')}
+                  </h1>
+                  <p className="text-lg text-gray-600">
+                    {t('certificateSystemName')}
+                  </p>
                 </div>
                 <Medal className="w-16 h-16 text-blue-600" />
               </div>
@@ -173,22 +183,35 @@ export const CertificateView: React.FC = () => {
             {/* Main Content */}
             <div className="text-center space-y-8">
               <div>
-                <p className="text-xl text-gray-700 mb-4">This is to certify that</p>
+                <p className="text-xl text-gray-700 mb-4">
+                  {t('certificateCertifyText')}
+                </p>
+
                 <h2 className="text-5xl font-bold text-blue-900 mb-4 border-b-2 border-blue-300 pb-2 inline-block">
                   {certificateData.participantName}
                 </h2>
-                <p className="text-lg text-gray-600">from {certificateData.schoolName}</p>
+
+                <p className="text-lg text-gray-600">
+                  {t('certificateFromEntity')} {certificateData.schoolName}
+                </p>
               </div>
 
               <div>
-                <p className="text-xl text-gray-700 mb-2">has achieved</p>
+                <p className="text-xl text-gray-700 mb-2">
+                  {t('certificateHasAchieved')}
+                </p>
+
                 <div className="flex items-center justify-center gap-4 mb-4">
                   <span className="text-6xl">{positionInfo.emoji}</span>
                   <h3 className={`text-4xl font-bold ${positionInfo.color}`}>
                     {positionInfo.text}
                   </h3>
                 </div>
-                <p className="text-xl text-gray-700 mb-2">in the</p>
+
+                <p className="text-xl text-gray-700 mb-2">
+                  {t('certificateInThe')}
+                </p>
+
                 <h4 className="text-3xl font-bold text-purple-900 mb-6">
                   {certificateData.eventName}
                 </h4>
@@ -198,24 +221,32 @@ export const CertificateView: React.FC = () => {
               <div className="bg-white bg-opacity-70 rounded-lg p-6 mx-auto max-w-md">
                 {certificateData.score && (
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-gray-700 font-medium">Score:</span>
-                    <span className="text-2xl font-bold text-green-600">{certificateData.score}/100</span>
+                    <span className="text-gray-700 font-medium">
+                      {t('certificateScoreLabel')}:
+                    </span>
+                    <span className="text-2xl font-bold text-green-600">
+                      {certificateData.score}/100
+                    </span>
                   </div>
                 )}
+
                 {certificateData.time && (
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-gray-700 font-medium">Time:</span>
-                    <span className="text-2xl font-bold text-blue-600">{certificateData.time}</span>
+                    <span className="text-gray-700 font-medium">
+                      {t('certificateTimeLabel')}:
+                    </span>
+                    <span className="text-2xl font-bold text-blue-600">
+                      {certificateData.time}
+                    </span>
                   </div>
                 )}
+
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">Date:</span>
+                  <span className="text-gray-700 font-medium">
+                    {t('certificateDateLabel')}:
+                  </span>
                   <span className="text-lg font-semibold text-gray-900">
-                    {new Date(certificateData.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
+                    {new Date(certificateData.date).toLocaleDateString()}
                   </span>
                 </div>
               </div>
@@ -226,60 +257,93 @@ export const CertificateView: React.FC = () => {
               <div className="flex justify-between items-end">
                 <div className="text-center">
                   <div className="w-48 border-b-2 border-gray-400 mb-2"></div>
-                  <p className="text-sm text-gray-600 font-medium">Compition Coordinator</p>
+                  <p className="text-sm text-gray-600 font-medium">
+                    {t('certificateCoordinator')}
+                  </p>
                 </div>
-                
+
                 <div className="text-center">
                   <Award className="w-12 h-12 text-yellow-600 mx-auto mb-2" />
-                  <p className="text-xs text-gray-500">Certificate ID: {certificateData.certificateId}</p>
+                  <p className="text-xs text-gray-500">
+                    {t('certificateIdLabel')}: {certificateData.certificateId}
+                  </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-48 border-b-2 border-gray-400 mb-2"></div>
-                  <p className="text-sm text-gray-600 font-medium">Entity Principal</p>
+                  <p className="text-sm text-gray-600 font-medium">
+                    {t('certificatePrincipal')}
+                  </p>
                 </div>
               </div>
             </div>
-
-            {/* Decorative Elements */}
-            <div className="absolute top-12 left-12 w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full opacity-20"></div>
-            <div className="absolute top-12 right-12 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20"></div>
-            <div className="absolute bottom-12 left-12 w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full opacity-20"></div>
-            <div className="absolute bottom-12 right-12 w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full opacity-20"></div>
           </div>
         </div>
 
         {/* Certificate Info */}
         <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Certificate Details</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            {t('certificateDetailsTitle')}
+          </h3>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="font-medium text-gray-700">Participant:</span>
-              <span className="ml-2 text-gray-900">{certificateData.participantName}</span>
+              <span className="font-medium text-gray-700">
+                {t('certificateParticipant')}:
+              </span>
+              <span className="ml-2 text-gray-900">
+                {certificateData.participantName}
+              </span>
             </div>
+
             <div>
-              <span className="font-medium text-gray-700">Entity:</span>
-              <span className="ml-2 text-gray-900">{certificateData.schoolName}</span>
+              <span className="font-medium text-gray-700">
+                {t('certificateEntity')}:
+              </span>
+              <span className="ml-2 text-gray-900">
+                {certificateData.schoolName}
+              </span>
             </div>
+
             <div>
-              <span className="font-medium text-gray-700">Compition:</span>
-              <span className="ml-2 text-gray-900">{certificateData.eventName}</span>
+              <span className="font-medium text-gray-700">
+                {t('certificateCompetition')}:
+              </span>
+              <span className="ml-2 text-gray-900">
+                {certificateData.eventName}
+              </span>
             </div>
+
             <div>
-              <span className="font-medium text-gray-700">Achievement:</span>
-              <span className="ml-2 text-gray-900">{positionInfo.text}</span>
+              <span className="font-medium text-gray-700">
+                {t('certificateAchievement')}:
+              </span>
+              <span className="ml-2 text-gray-900">
+                {positionInfo.text}
+              </span>
             </div>
+
             <div>
-              <span className="font-medium text-gray-700">Date Issued:</span>
-              <span className="ml-2 text-gray-900">{new Date().toLocaleDateString()}</span>
+              <span className="font-medium text-gray-700">
+                {t('certificateDateIssued')}:
+              </span>
+              <span className="ml-2 text-gray-900">
+                {new Date().toLocaleDateString()}
+              </span>
             </div>
+
             <div>
-              <span className="font-medium text-gray-700">Certificate ID:</span>
-              <span className="ml-2 text-gray-900 font-mono">{certificateData.certificateId}</span>
+              <span className="font-medium text-gray-700">
+                {t('certificateIdLabel')}:
+              </span>
+              <span className="ml-2 text-gray-900 font-mono">
+                {certificateData.certificateId}
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 };
