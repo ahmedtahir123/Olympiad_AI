@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { User, Plus, Edit, Trash2, Upload, Download, Search, Filter, Camera, FileText } from 'lucide-react';
-import { participantService } from '../../services/participantService';
-import { eventService } from '../../services/eventService';
+import { Camera, Download, Edit, FileText, Filter, Plus, Search, Trash2, Upload, User } from 'lucide-react';
+import React, { useCallback, useState } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { useApi, useMutation } from '../../hooks/useApi';
-import { Participant, Event } from '../../types';
+import { eventService } from '../../services/eventService';
+import { participantService } from '../../services/participantService';
+import { Participant } from '../../types';
 
 export const ParticipantManagement: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -11,6 +12,8 @@ export const ParticipantManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [gradeFilter, setGradeFilter] = useState<string>('all');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { t, isRTL } = useLanguage();
+
 
   const fetchPerticipants = useCallback(() => participantService.getAllParticipants(), []);
   const fetchEvents = useCallback(() => eventService.getAllEvents(), []);
@@ -20,9 +23,9 @@ export const ParticipantManagement: React.FC = () => {
     { immediate: true }
   );
 
-        const { data: events } = useApi(fetchEvents, {
-        immediate: true,
-      });
+  const { data: events } = useApi(fetchEvents, {
+    immediate: true,
+  });
 
   const createParticipantMutation = useMutation(
     (data: any) => participantService.createParticipant(data),
@@ -84,7 +87,7 @@ export const ParticipantManagement: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const participantData = {
       ...formData,
       age: parseInt(formData.age),
@@ -174,184 +177,166 @@ export const ParticipantManagement: React.FC = () => {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className={`p-6 space-y-6 ${isRTL ? "rtl text-right" : "ltr text-left"}`}>
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Participant Management</h1>
-          <p className="text-gray-600 mt-1">Manage participant registrations and event assignments</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            {t("participantManagement")}
+          </h1>
+          <p className="text-gray-600 mt-1">
+            {t("participantManagementDesc")}
+          </p>
         </div>
-        <div className="flex items-center space-x-3">
+
+        <div className={`flex items-center ${isRTL ? "space-x-reverse space-x-3" : "space-x-3"}`}>
           <button
             onClick={() => participantService.exportParticipants()}
-            className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50"
           >
             <Download className="w-4 h-4" />
-            <span>Export</span>
+            {t("export")}
           </button>
-          <label className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+
+          <label className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50 cursor-pointer">
             <Upload className="w-4 h-4" />
-            <span>Import</span>
-            <input
-              type="file"
-              accept=".xlsx,.csv"
-              onChange={handleFileUpload}
-              className="hidden"
-            />
+            {t("import")}
+            <input type="file" accept=".xlsx,.csv" onChange={handleFileUpload} hidden />
           </label>
+
           <button
             onClick={() => setShowAddForm(true)}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
           >
             <Plus className="w-4 h-4" />
-            <span>Add Participant</span>
+            {t("addParticipant")}
           </button>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border p-4">
+      {/* Search & Filter */}
+      <div className="bg-white rounded-lg border p-4">
         <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search participants..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+          <div className="flex-1 relative">
+            <Search className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 ${isRTL ? "right-3" : "left-3"}`} />
+            <input
+              type="text"
+              placeholder={t("searchParticipants")}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={`w-full py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${isRTL ? "pr-10 pl-4" : "pl-10 pr-4"}`}
+            />
           </div>
-          <div className="flex items-center space-x-2">
+
+          <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-gray-400" />
             <select
               value={gradeFilter}
               onChange={(e) => setGradeFilter(e.target.value)}
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="border rounded-lg px-3 py-2"
             >
-              <option value="all">All Grades</option>
-              <option value="9th">Grade 9</option>
-              <option value="10th">Grade 10</option>
-              <option value="11th">Grade 11</option>
-              <option value="12th">Grade 12</option>
+              <option value="all">{t("allGrades")}</option>
+              <option value="9th">{t("grade9")}</option>
+              <option value="10th">{t("grade10")}</option>
+              <option value="11th">{t("grade11")}</option>
+              <option value="12th">{t("grade12")}</option>
             </select>
           </div>
         </div>
       </div>
 
-      {/* Participants Table */}
-      <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Participant
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Grade
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Category
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Competitions
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+      {/* Table */}
+      <div className="bg-white rounded-lg border overflow-x-auto">
+        <table className="w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
+                {t("participant")}
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
+                {t("grade")}
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
+                {t("category")}
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
+                {t("competitions")}
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase text-end">
+                {t("actions")}
+              </th>
+            </tr>
+          </thead>
+
+          <tbody className="divide-y">
+            {filteredParticipants.map((p) => (
+              <tr key={p.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4">
+                  <div className={`flex items-center ${isRTL ? "space-x-reverse space-x-3" : "space-x-3"}`}>
+                    {p.photo ? (
+                      <img src={p.photo} className="h-10 w-10 rounded-full object-cover" />
+                    ) : (
+                      <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                        <User className="w-5 h-5 text-gray-600" />
+                      </div>
+                    )}
+                    <div>
+                      <div className="font-medium">{p.name}</div>
+                      <div className="text-sm text-gray-500">
+                        {t("age")} {p.age}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="px-6 py-4">{p.grade}</td>
+
+                <td className="px-6 py-4">
+                  <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                    {t(p.category)}
+                  </span>
+                </td>
+
+                <td className="px-6 py-4">
+                  <div>{p.eventsRegistered.length} {t("events")}</div>
+                </td>
+
+                <td className="px-6 py-4 text-end">
+                  <div className="flex justify-end gap-2">
+                    <button onClick={() => handleEdit(p)} className="text-blue-600">
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button onClick={() => handleDelete(p.id)} className="text-red-600">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredParticipants.map((participant) => (
-                <tr key={participant.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10">
-                        {participant.photo ? (
-                          <img
-                            className="h-10 w-10 rounded-full object-cover"
-                            src={participant.photo}
-                            alt={participant.name}
-                          />
-                        ) : (
-                          <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
-                            <User className="w-5 h-5 text-gray-600" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{participant.name}</div>
-                        <div className="text-sm text-gray-500">Age {participant.age}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{participant.grade}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                      {participant.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">
-                      {participant.eventsRegistered.length} events
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {participant.eventsRegistered.slice(0, 2).map(eventId => {
-                        const event = events?.find(e => e.id === eventId);
-                        return event?.name;
-                      }).filter(Boolean).join(', ')}
-                      {participant.eventsRegistered.length > 2 && '...'}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center justify-end space-x-2">
-                      <button
-                        onClick={() => handleEdit(participant)}
-                        className="text-blue-600 hover:text-blue-900 p-1"
-                        disabled={updateParticipantMutation.loading}
-                      >
-                        <Edit className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(participant.id)}
-                        className="text-red-600 hover:text-red-900 p-1"
-                        disabled={deleteParticipantMutation.loading}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
 
+      {/* Empty State */}
       {filteredParticipants.length === 0 && !loading && (
         <div className="text-center py-12">
           <User className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No participants found</h3>
-          <p className="text-gray-600">
-            {searchTerm || gradeFilter !== 'all'
-              ? 'Try adjusting your search or filters'
-              : 'Start by adding your first participant'
-            }
-          </p>
+          <h3 className="text-lg font-medium">{t("noParticipants")}</h3>
+          <p className="text-gray-600">{t("adjustSearch")}</p>
         </div>
       )}
 
       {/* Add/Edit Form Modal */}
       {showAddForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className={`bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto ${isRTL ? "rtl text-right" : "ltr text-left"}`}>
+
+            {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-gray-900">
-                {editingParticipant ? 'Edit Participant' : 'Add New Participant'}
+                {editingParticipant
+                  ? t("editParticipant")
+                  : t("addNewParticipant")}
               </h2>
               <button
                 onClick={() => {
@@ -366,114 +351,115 @@ export const ParticipantManagement: React.FC = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+
+              {/* Basic Info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Participant Name
+                  <label className="block text-sm font-medium mb-2">
+                    {t("participantName")}
                   </label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Age
+                  <label className="block text-sm font-medium mb-2">
+                    {t("age")}
                   </label>
                   <input
                     type="number"
-                    required
                     min="10"
                     max="20"
+                    required
                     value={formData.age}
                     onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Grade
+                  <label className="block text-sm font-medium mb-2">
+                    {t("grade")}
                   </label>
                   <select
                     required
                     value={formData.grade}
                     onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="">Select Grade</option>
-                    <option value="9th">Grade 9</option>
-                    <option value="10th">Grade 10</option>
-                    <option value="11th">Grade 11</option>
-                    <option value="12th">Grade 12</option>
+                    <option value="">{t("selectGrade")}</option>
+                    <option value="9th">{t("grade9")}</option>
+                    <option value="10th">{t("grade10")}</option>
+                    <option value="11th">{t("grade11")}</option>
+                    <option value="12th">{t("grade12")}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Category
+                  <label className="block text-sm font-medium mb-2">
+                    {t("category")}
                   </label>
                   <select
                     required
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="">Select Category</option>
-                    <option value="academic">Academic</option>
-                    <option value="sporting">Sporting</option>
+                    <option value="">{t("selectCategory")}</option>
+                    <option value="academic">{t("academic")}</option>
+                    <option value="sporting">{t("sporting")}</option>
                   </select>
                 </div>
               </div>
 
+              {/* Competitions */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Select Competitions
+                <label className="block text-sm font-medium mb-2">
+                  {t("selectCompetitions")}
                 </label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-40 overflow-y-auto border border-gray-300 rounded-lg p-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-40 overflow-y-auto border rounded-lg p-3">
                   {events?.map((event) => (
-                    <label key={event.id} className="flex items-center space-x-2">
+                    <label
+                      key={event.id}
+                      className={`flex items-center ${isRTL ? "space-x-reverse space-x-2" : "space-x-2"}`}
+                    >
                       <input
                         type="checkbox"
                         checked={formData.eventsRegistered.includes(event.id)}
                         onChange={(e) => {
-                          if (e.target.checked) {
-                            setFormData({
-                              ...formData,
-                              eventsRegistered: [...formData.eventsRegistered, event.id]
-                            });
-                          } else {
-                            setFormData({
-                              ...formData,
-                              eventsRegistered: formData.eventsRegistered.filter(id => id !== event.id)
-                            });
-                          }
+                          setFormData({
+                            ...formData,
+                            eventsRegistered: e.target.checked
+                              ? [...formData.eventsRegistered, event.id]
+                              : formData.eventsRegistered.filter(id => id !== event.id)
+                          });
                         }}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
-                      <span className="text-sm text-gray-700">{event.name}</span>
+                      <span className="text-sm">{event.name}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
+              {/* Photo */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Participant Photo
+                <label className="block text-sm font-medium mb-2">
+                  {t("participantPhoto")}
                 </label>
-                <div className="flex items-center space-x-4">
-                  <label className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div className={`flex items-center ${isRTL ? "space-x-reverse space-x-4" : "space-x-4"}`}>
+                  <label className="flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer hover:bg-gray-50">
                     <Camera className="w-4 h-4" />
-                    <span>Upload Photo</span>
+                    {t("uploadPhoto")}
                     <input
                       type="file"
                       accept="image/*"
+                      hidden
                       onChange={(e) => setFormData({ ...formData, photo: e.target.files?.[0] || null })}
-                      className="hidden"
                     />
                   </label>
                   {formData.photo && (
@@ -482,29 +468,34 @@ export const ParticipantManagement: React.FC = () => {
                 </div>
               </div>
 
+              {/* Documents */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Documents (Optional)
+                <label className="block text-sm font-medium mb-2">
+                  {t("documentsOptional")}
                 </label>
-                <label className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label className="flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer hover:bg-gray-50">
                   <FileText className="w-4 h-4" />
-                  <span>Upload Documents</span>
+                  {t("uploadDocuments")}
                   <input
                     type="file"
                     multiple
                     accept=".pdf,.doc,.docx"
-                    onChange={(e) => setFormData({ ...formData, documents: Array.from(e.target.files || []) })}
-                    className="hidden"
+                    hidden
+                    onChange={(e) =>
+                      setFormData({ ...formData, documents: Array.from(e.target.files || []) })
+                    }
                   />
                 </label>
+
                 {formData.documents.length > 0 && (
                   <div className="mt-2 text-sm text-gray-600">
-                    {formData.documents.length} document(s) selected
+                    {formData.documents.length} {t("documentsSelected")}
                   </div>
                 )}
               </div>
 
-              <div className="flex justify-end space-x-3">
+              {/* Actions */}
+              <div className={`flex justify-end ${isRTL ? "space-x-reverse space-x-3" : "space-x-3"}`}>
                 <button
                   type="button"
                   onClick={() => {
@@ -512,24 +503,28 @@ export const ParticipantManagement: React.FC = () => {
                     setEditingParticipant(null);
                     resetForm();
                   }}
-                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2 border rounded-lg hover:bg-gray-50"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
+
                 <button
                   type="submit"
                   disabled={createParticipantMutation.loading || updateParticipantMutation.loading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                 >
                   {createParticipantMutation.loading || updateParticipantMutation.loading
-                    ? 'Saving...'
-                    : editingParticipant ? 'Update' : 'Add'} Participant
+                    ? t("saving")
+                    : editingParticipant
+                      ? t("update")
+                      : t("add")}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+
     </div>
   );
 };
